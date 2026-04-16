@@ -4,6 +4,15 @@ import { useLocation } from "react-router";
 import { ChevronDown } from "lucide-react";
 import { NavLink } from "react-router";
 
+type TSidebarNavItem = {
+  item: TSidebarItem;
+  depth?: number;
+  userRole: string;
+  isCollapsed: boolean;
+  expandSidebar: () => void;
+  closeMobile?: () => void;
+};
+
 export function SidebarNavItem({
   item,
   depth = 0,
@@ -11,14 +20,7 @@ export function SidebarNavItem({
   isCollapsed,
   expandSidebar,
   closeMobile,
-}: {
-  item: TSidebarItem;
-  depth?: number;
-  userRole: string;
-  isCollapsed: boolean;
-  expandSidebar: () => void;
-  closeMobile?: () => void;
-}) {
+}: TSidebarNavItem) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -62,15 +64,14 @@ export function SidebarNavItem({
     }
   };
 
-  const activeClass =
-    "bg-primary text-text-main shadow-md shadow-primary-dark/20";
+  const activeClass = "bg-sidebar-accent text-sidebar-primary shadow-sm";
   const inactiveClass =
-    "text-text-muted hover:bg-surface-hover/50 hover:text-text-main";
+    "text-sidebar-foreground opacity-70 hover:opacity-100 hover:bg-sidebar-accent hover:text-sidebar-foreground";
 
   return (
-    <div className="relative group/item w-full px-1 text-[14px]">
+    <div className="relative group/item w-full px-2 text-[14px]">
       {/* Botón Principal / Link */}
-      {item.path && !hasSubRoutes ? (
+      {!hasSubRoutes ? (
         <NavLink
           to={item.path}
           onClick={closeMobile}
@@ -81,7 +82,7 @@ export function SidebarNavItem({
           `}
         >
           <div
-            className={`${isCollapsed ? "" : "min-w-5.5"} flex items-center justify-center`}
+            className={`${isCollapsed ? "" : "min-w-5.5"} flex items-center justify-center transition-colors`}
           >
             {item.icon}
           </div>
@@ -93,9 +94,9 @@ export function SidebarNavItem({
 
           {/* Tooltip simple */}
           {isCollapsed && (
-            <div className="fixed left-17.5 ml-2 px-3 py-2 bg-surface text-text-main text-xs font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap z-999 border border-border shadow-2xl pointer-events-none">
+            <div className="fixed left-17.5 ml-2 px-3 py-2 bg-sidebar text-sidebar-foreground text-xs font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap z-999 border border-sidebar-border shadow-2xl pointer-events-none">
               {item.name}
-              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-surface rotate-45 border-l border-b border-border" />
+              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-sidebar rotate-45 border-l border-b border-sidebar-border" />
             </div>
           )}
         </NavLink>
@@ -104,7 +105,7 @@ export function SidebarNavItem({
           onClick={handleClick}
           className={`
             w-full flex items-center gap-3 p-2 rounded-xl transition-all duration-200 mb-1
-            ${(isOpen || isAnySubRouteActive) && !isCollapsed ? "text-primary-light bg-surface-hover/30" : inactiveClass}
+            ${(isOpen || isAnySubRouteActive) && !isCollapsed ? "text-sidebar-primary bg-sidebar-accent" : inactiveClass}
             ${isCollapsed ? "justify-center" : ""}
           `}
         >
@@ -127,9 +128,9 @@ export function SidebarNavItem({
 
           {/* Tooltip para items con subrutas */}
           {isCollapsed && (
-            <div className="fixed left-17.5 ml-2 px-3 py-2 bg-primary text-text-main text-xs font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap z-999 shadow-2xl pointer-events-none">
-              {item.name} (Click para expandir)
-              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-primary rotate-45" />
+            <div className="fixed left-17.5 ml-2 px-3 py-2 bg-sidebar-primary text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap z-999 shadow-2xl pointer-events-none">
+              {item.name}
+              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-sidebar-primary rotate-45" />
             </div>
           )}
         </button>
@@ -137,7 +138,7 @@ export function SidebarNavItem({
 
       {/* Subrutas */}
       {!isCollapsed && isOpen && hasSubRoutes && (
-        <div className="relative ml-6 border-l border-border space-y-1 my-1 animate-in slide-in-from-top-1 duration-200">
+        <div className="relative ml-4 border-l border-sidebar-border space-y-1 my-1 animate-in slide-in-from-top-1 duration-200">
           {visibleSubRoutes.map((sub) => (
             <SidebarNavItem
               key={sub.name}
