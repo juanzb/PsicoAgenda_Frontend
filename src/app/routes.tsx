@@ -16,8 +16,14 @@ export const routesApp = createBrowserRouter([
   {
     path: "auth",
     children: [
-      { path: "login", Component: LoginPage },
-      { path: "register", Component: RegistrePage },
+      {
+        path: "login",
+        Component: LoginPage,
+      },
+      {
+        path: "register",
+        Component: RegistrePage,
+      },
     ],
   },
   {

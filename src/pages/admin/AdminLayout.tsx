@@ -17,31 +17,37 @@ export function AdminLayout(): ReactNode {
         {
           name: "Dashboard",
           path: "/admin/dashboard",
-          icon: <LayoutDashboard size={22} />,
+          icon: <LayoutDashboard size={16} />,
           roles: ["ADMIN", "DOCTOR"],
         },
         {
-          name: "Gestión",
-          icon: <Settings size={22} />,
+          name: "Gestion",
+          icon: <Settings size={18} />,
           roles: ["ADMIN"],
           subRoutes: [
             {
+              name: "Dashboard",
+              path: "/admin/dashboard",
+              icon: <LayoutDashboard size={16} />,
+              roles: ["ADMIN", "DOCTOR"],
+            },
+            {
               name: "Clientes",
               path: "/admin/clients",
-              icon: <Users size={18} />,
+              icon: <Users size={16} />,
               roles: ["ADMIN"],
             },
             {
               name: "Doctores",
               path: "/admin/doctors",
-              icon: <Stethoscope size={18} />,
+              icon: <Stethoscope size={16} />,
             },
           ],
         },
         {
           name: "Citas",
           path: "/admin/appointments",
-          icon: <Calendar size={22} />,
+          icon: <Calendar size={18} />,
         },
       ]}
       dataUser={{

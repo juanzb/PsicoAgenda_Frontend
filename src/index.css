@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #1e40af; /* Blue 800 */
+  --color-primary-light: #3b82f6; /* Blue 500 */
+  --color-primary-dark: #1e3a8a; /* Blue 900 */
+  
+  --color-secondary: #64748b; /* Slate 500 */
+  --color-secondary-light: #94a3b8; /* Slate 400 */
+  --color-secondary-dark: #475569; /* Slate 600 */
+
+  --color-accent: #0d9488; /* Teal 600 */
+  
+  /* Backgrounds & Surfaces */
+  --color-background: #020617; /* Slate 950 (Dark mode default) */
+  --color-surface: #0f172a;    /* Slate 900 */
+  --color-surface-hover: #1e293b; /* Slate 800 */
+  --color-border: #1e293b;     /* Slate 800 */
+  
+  /* Status */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* Text Colors */
+  --color-text-main: #f8fafc;  /* Slate 50 */
+  --color-text-muted: #94a3b8; /* Slate 400 */
+}
+
+:root {
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary-dark);
+}
