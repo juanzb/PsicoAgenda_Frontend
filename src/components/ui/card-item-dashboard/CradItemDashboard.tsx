@@ -20,7 +20,7 @@ export function CradItemDashboard({
   description = "vs. mes anterior",
 }: TCradItemDashboardProps): ReactNode {
   return (
-    <div className="bg-card p-4 rounded-3xl border border-border shadow-card hover:shadow-elevated bg-sidebar/2 transition-all duration-300 group ">
+    <div className="bg-card p-4 rounded-3xl border border-border shadow-card hover:shadow-elevated transition-all duration-300 group ">
       <div className="flex items-start justify-between mb-4">
         <div className="flex flex-col gap-1">
           <span className="text-xs font-bold uppercase tracking-widest text-primary group-hover:text-primary transition-colors">

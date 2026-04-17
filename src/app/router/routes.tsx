@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router";
-import { HomePage } from "../../pages/home/home";
-import { LoginPage } from "../../pages/auth/login/login";
-import { DashboardPage } from "../../pages/admin/dashboard/dashboard";
-import { DoctorsPage } from "../../pages/admin/doctors/doctors";
-import { ClientsPage } from "../../pages/admin/clients/clients";
+import { HomePage } from "../../pages/landing/home/Home";
+import { LoginPage } from "../../pages/auth/login/Login";
+import { DashboardPage } from "../../pages/admin/dashboard/Dashboard";
+import { DoctorsPage } from "../../pages/admin/doctors/Doctors";
+import { PatientsPage } from "../../pages/admin/patients/Patients";
+import { AppointmentsPage } from "../../pages/admin/appointments/Appointments";
 import { NotFoundPage } from "../../pages/not-found/NotFount";
-import { RegistrePage } from "../../pages/auth/register/register";
+import { RegistrePage } from "../../pages/auth/register/Register";
 import { AdminLayout } from "../../pages/admin/AdminLayout";
 import { PATHS } from "./paths";
 
@@ -15,17 +16,12 @@ export const routesApp = createBrowserRouter([
     Component: HomePage,
   },
   {
-    path: PATHS.AUTH.ROOT,
-    children: [
-      {
-        path: PATHS.AUTH.LOGIN,
-        Component: LoginPage,
-      },
-      {
-        path: PATHS.AUTH.REGISTER,
-        Component: RegistrePage,
-      },
-    ],
+    path: PATHS.LOGIN,
+    Component: LoginPage,
+  },
+  {
+    path: PATHS.REGISTER,
+    Component: RegistrePage,
   },
   {
     path: PATHS.ADMIN.ROOT,
@@ -41,12 +37,12 @@ export const routesApp = createBrowserRouter([
         Component: DoctorsPage,
       },
       {
-        path: PATHS.ADMIN.CLIENTS,
-        Component: ClientsPage,
+        path: PATHS.ADMIN.PATIENTS,
+        Component: PatientsPage,
       },
       {
         path: PATHS.ADMIN.APPOINTMENTS,
-        element: <div>Página de Citas (Próximamente)</div>,
+        Component: AppointmentsPage,
       },
     ],
   },

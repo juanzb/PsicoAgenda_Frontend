@@ -6,6 +6,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { Button } from "../button/Button";
 
 export type TActionVariant = "danger" | "info" | "success" | "warning";
 
@@ -32,31 +33,43 @@ export function ActionModal({
 }: TActionModalProps): ReactNode {
   if (!isOpen) return null;
 
-  // Mapeo de estilos por variante
-  const variants = {
+  // Mapeo de estilos por variante para el icono y el botón
+  const variantConfig: Record<
+    TActionVariant,
+    {
+      icon: ReactNode;
+      bgIcon: string;
+      btnVariant: "primary" | "secondary" | "destructive" | "ghost" | "link" | "outline";
+      btnClass?: string;
+    }
+  > = {
     danger: {
       icon: <AlertCircle className="text-destructive" size={24} />,
       bgIcon: "bg-destructive/10",
-      btn: "bg-destructive hover:bg-destructive/90 text-white shadow-destructive/20",
+      btnVariant: "destructive" as const,
+      btnClass: "",
     },
     warning: {
       icon: <AlertTriangle className="text-amber-500" size={24} />,
       bgIcon: "bg-amber-500/10",
-      btn: "bg-amber-500 hover:bg-amber-600 text-white shadow-amber-500/20",
+      btnVariant: "primary" as const, // Podríamos añadir una variante 'warning' al Button si fuera necesario
+      btnClass: "bg-amber-500 hover:bg-amber-600 border-none shadow-amber-500/20",
     },
     success: {
       icon: <CheckCircle2 className="text-primary" size={24} />,
       bgIcon: "bg-primary/10",
-      btn: "bg-primary hover:bg-primary/90 text-white shadow-primary/20",
+      btnVariant: "primary" as const,
+      btnClass: "",
     },
     info: {
       icon: <Info className="text-blue-500" size={24} />,
       bgIcon: "bg-blue-500/10",
-      btn: "bg-blue-500 hover:bg-blue-600 text-white shadow-blue-500/20",
+      btnVariant: "primary" as const,
+      btnClass: "bg-blue-500 hover:bg-blue-600 border-none shadow-blue-500/20",
     },
   };
 
-  const currentVariant = variants[variant];
+  const currentVariant = variantConfig[variant];
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
@@ -97,24 +110,22 @@ export function ActionModal({
 
           {/* Acciones */}
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
-            <button
+            <Button
+              variant="secondary"
+              className="flex-1 rounded-2xl h-12"
               onClick={onCancel}
               disabled={isLoading}
-              className="flex-1 px-6 py-3 text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted rounded-2xl transition-all border border-border disabled:opacity-50"
             >
               Cancelar
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={currentVariant.btnVariant}
+              className={`flex-1 rounded-2xl h-12 shadow-lg ${currentVariant.btnClass || ""}`}
               onClick={onAction}
-              disabled={isLoading}
-              className={`flex-1 px-6 py-3 text-sm font-bold rounded-2xl transition-all shadow-lg hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 ${currentVariant.btn}`}
+              isLoading={isLoading}
             >
-              {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                actionLabel
-              )}
-            </button>
+              {actionLabel}
+            </Button>
           </div>
         </div>
       </div>

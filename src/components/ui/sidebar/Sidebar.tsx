@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import "./sidebar.css";
 import { NavLink } from "react-router";
-import { PATHS } from "../../app/router/paths";
+import { PATHS } from "../../../app/router/paths";
 
 export type TSidebarItem = {
   name: string;
@@ -36,7 +36,7 @@ export type TSidebarProps = {
   childrenClassName?: string;
 };
 
-export function SidebarLayout({
+export function Sidebar({
   items,
   dataUser,
   onLogout,
@@ -193,7 +193,7 @@ export function SidebarLayout({
             {!effectiveCollapsed && (
               <button
                 onClick={onLogout}
-                className="flex-1 p-2.5 text-sidebar-foreground opacity-50 hover:opacity-100 hover:text-destructive hover:bg-destructive/10 rounded-xl transition-all border border-transparent hover:border-destructive/20"
+                className="flex items-center cursor-pointer p-2.5 h-full justify-center text-center text-sidebar-foreground opacity-50 hover:opacity-100 hover:text-destructive hover:bg-destructive/10 rounded-xl transition-all border border-transparent hover:border-destructive/20"
                 title="Cerrar sesión"
               >
                 <LogOut size={20} />

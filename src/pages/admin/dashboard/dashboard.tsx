@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { CradItemDashboard } from "../../../components/card-item-dashboard/CradItemDashboard";
+import { CradItemDashboard } from "../../../components/ui/card-item-dashboard/CradItemDashboard";
 import { Users, Calendar, UserCheck, Activity } from "lucide-react";
 
 export function DashboardPage(): ReactNode {

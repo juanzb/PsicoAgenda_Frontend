@@ -1,5 +1,5 @@
 import { useState, useMemo, type ReactNode } from "react";
-import { SidebarLayout } from "../../components/sidebar/Sidebar";
+import { Sidebar } from "../../components/ui/sidebar/Sidebar";
 import {
   Calendar,
   LayoutDashboard,
@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Outlet, useNavigate, useLocation } from "react-router";
 import { PATHS } from "../../app/router/paths";
-import { ActionModal } from "../../components/action-modal/ActionModal";
+import { ActionModal } from "../../components/ui/action-modal/ActionModal";
 
 export function AdminLayout(): ReactNode {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -38,8 +38,8 @@ export function AdminLayout(): ReactNode {
             roles: ["ADMIN", "DOCTOR"],
           },
           {
-            name: "Clientes",
-            path: PATHS.ADMIN.CLIENTS,
+            name: "Pacientes",
+            path: PATHS.ADMIN.PATIENTS,
             icon: <Users size={16} />,
             roles: ["ADMIN"],
           },
@@ -84,61 +84,57 @@ export function AdminLayout(): ReactNode {
     setTimeout(() => {
       setIsLogoutModalOpen(false);
       setIsLoggingOut(false);
-      navigate(PATHS.AUTH.LOGIN);
+      navigate(PATHS.LOGIN);
     }, 800);
   };
 
   return (
     <>
-      <SidebarLayout
+      <Sidebar
         appName="PsicoAgenda"
         items={menuItems}
         dataUser={{
           name: "Dr. Camilo Sánchez",
           email: "contacto@psicoagenda.com",
           role: "ADMIN",
-          avatarUrl:
-            "https://ui-avatars.com/api/?name=Camilo+Sanchez&background=0D8ABC&color=fff",
+          avatarUrl: "",
         }}
         onLogout={() => setIsLogoutModalOpen(true)}
-        childrenClassName="bg-background w-full h-full"
+        childrenClassName="bg-background w-full h-full flex flex-col overflow-hidden"
       >
-        {/* HEADER DINÁMICO PREMIUM */}
-        <header className="relative p-3 px-4 md:px-4 bg-linear-to-b from-card/30 to-transparent">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        {/* HEADER DINÁMICO FIJO - Solo visible en Desktop */}
+        <header className="hidden md:block sticky top-0 z-30 w-full p-4 bg-white/80 backdrop-blur-md border-b border-border/50 shadow-sm transition-all duration-300">
+          <div className="flex md:flex-row md:items-center justify-between gap-4">
             <div className="flex flex-col gap-2">
-              {/* Título con indicador de marca */}
-              <div className="flex items-center gap-4">
-                <div className="w-1.5 h-8 bg-primary rounded-full shadow-[0_0_15px_rgba(20,136,116,0.3)]" />
-                <h2 className="text-[28px] md:text-[28px] font-bold text-foreground tracking-tight">
+              <div className="flex items-center gap-3">
+                <div className="w-1.5 h-6 bg-primary rounded-full shadow-[0_0_10px_rgba(20,136,116,0.3)]" />
+                <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">
                   {currentRouteName}
                 </h2>
               </div>
             </div>
 
-            {/* Fecha Actual (Derecha) */}
+            {/* Fecha Actual */}
             <div className="hidden sm:flex items-center gap-3">
-              <div className="px-4 py-2 bg-card border border-border/40 rounded-xl text-[10px] font-bold text-primary uppercase tracking-widest shadow-sm">
+              <div className="px-3 py-1.5 bg-muted/50 border border-border/40 rounded-xl text-[10px] font-black text-primary uppercase tracking-widest">
                 {new Date().toLocaleDateString("es-ES", {
-                  weekday: "long",
+                  weekday: "short",
                   day: "numeric",
                   month: "long",
                 })}
               </div>
             </div>
           </div>
-
-          {/* Línea divisoria elegante */}
-          <div className="absolute bottom-0 left-8 right-8 h-px bg-linear-to-r from-transparent via-border/60 to-transparent" />
         </header>
 
-        {/* ÁREA DE CONTENIDO */}
-        <div className="p-6 md:p-8 animate-slide-up">
-          <Outlet />
+        {/* ÁREA DE CONTENIDO - Flex container para permitir scroll interno en las vistas */}
+        <div className="flex-1 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-500">
+          <div className="flex-1 overflow-hidden p-4 md:p-6 lg:p-8">
+            <Outlet />
+          </div>
         </div>
-      </SidebarLayout>
+      </Sidebar>
 
-      {/* Modal de Confirmación de Cierre de Sesión */}
       <ActionModal
         isOpen={isLogoutModalOpen}
         title="¿Cerrar sesión?"
