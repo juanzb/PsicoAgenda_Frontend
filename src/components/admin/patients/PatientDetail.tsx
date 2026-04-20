@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { type IPatient } from "../card-patients/CardPatients";
-import { Button } from "../button/Button";
+import { type IPatient } from "./CardPatients";
+import { Button } from "../../ui/button/Button";
 
 interface PatientDetailProps {
   patient: IPatient;

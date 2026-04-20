@@ -1,6 +1,20 @@
-import { Brain, Heart, Users, Baby, Briefcase, Sparkles, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../ui/card/Card";
-import { Button } from "../../ui/button/Button";
+import {
+  Brain,
+  Heart,
+  Users,
+  Baby,
+  Briefcase,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "../ui/card/Card";
+import { Button } from "../ui/button/Button";
 
 const services = [
   {
@@ -43,7 +57,10 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section id="servicios" className="py-16 bg-white relative overflow-hidden border-y border-border/50">
+    <section
+      id="servicios"
+      className="py-16 bg-white relative overflow-hidden border-y border-border/50"
+    >
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-12 max-w-3xl mx-auto">
           <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-4 block">
@@ -53,7 +70,8 @@ const ServicesSection = () => {
             Atención Integral para tu Bienestar
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto font-medium">
-            Contamos con especialistas altamente calificados para brindarte una atención ética, profesional y humana.
+            Contamos con especialistas altamente calificados para brindarte una
+            atención ética, profesional y humana.
           </p>
         </div>
 
@@ -76,7 +94,11 @@ const ServicesSection = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-6 pt-0">
-                <Button variant="ghost" size="sm" className="p-0 text-primary font-bold hover:bg-transparent group/btn">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="p-0 text-primary font-bold hover:bg-transparent group/btn"
+                >
                   Más información
                   <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>

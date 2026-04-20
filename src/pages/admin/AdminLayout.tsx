@@ -129,7 +129,7 @@ export function AdminLayout(): ReactNode {
 
         {/* ÁREA DE CONTENIDO - Flex container para permitir scroll interno en las vistas */}
         <div className="flex-1 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-500">
-          <div className="flex-1 overflow-hidden p-4 md:p-6 lg:p-8">
+          <div className="felx flex-1 overflow-hidden p-2 md:p-3 lg:p-3 flex-col">
             <Outlet />
           </div>
         </div>

@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import Navbar from "../../../components/landing/navbar/Navbar";
-import HeroSection from "../../../components/landing/hero-section/HeroSection";
-import ServicesSection from "../../../components/landing/service-section/ServiceSection";
-import CTASection from "../../../components/landing/cta-section/CTASection";
-import Footer from "../../../components/landing/footer/Footer";
+import Navbar from "../../../components/landing/Navbar";
+import HeroSection from "../../../components/landing/HeroSection";
+import ServicesSection from "../../../components/landing/ServiceSection";
+import ContactoSection from "../../../components/landing/ContactoSection";
+import Footer from "../../../components/landing/Footer";
 
 export function HomePage(): ReactNode {
   return (
@@ -11,7 +11,7 @@ export function HomePage(): ReactNode {
       <Navbar />
       <HeroSection />
       <ServicesSection />
-      <CTASection />
+      <ContactoSection />
       <Footer />
     </div>
   );

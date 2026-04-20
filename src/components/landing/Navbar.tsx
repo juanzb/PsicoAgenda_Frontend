@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router";
-import { Button } from "../../ui/button/Button";
+import { Button } from "../ui/button/Button";
 import { Menu, X, Brain, Calendar } from "lucide-react";
 
 const Navbar = () => {
@@ -23,7 +23,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav 
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white border-b-2 border-border shadow-lg ${
         scrolled ? "py-2" : "py-4"
       }`}
@@ -35,8 +35,12 @@ const Navbar = () => {
               <Brain className="w-6 h-6 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-black text-foreground tracking-tight leading-none">PsiAgenda</span>
-              <span className="text-[9px] text-primary font-bold uppercase tracking-[0.2em]">Bienestar Mental</span>
+              <span className="text-xl font-black text-foreground tracking-tight leading-none">
+                PsiAgenda
+              </span>
+              <span className="text-[9px] text-primary font-bold uppercase tracking-[0.2em]">
+                Bienestar Mental
+              </span>
             </div>
           </NavLink>
 
@@ -54,15 +58,22 @@ const Navbar = () => {
                 </a>
               ))}
             </div>
-            
+
             <div className="flex items-center gap-4 border-l-2 border-border pl-8">
               <NavLink to="/login">
-                <Button variant="ghost" size="sm" className="font-bold text-foreground hover:text-primary">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="font-bold text-foreground hover:text-primary"
+                >
                   Ingresar
                 </Button>
               </NavLink>
               <NavLink to="/register">
-                <Button size="sm" className="rounded-xl px-6 gradient-primary font-bold shadow-md hover:shadow-primary/30">
+                <Button
+                  size="sm"
+                  className="rounded-xl px-6 gradient-primary font-bold shadow-md hover:shadow-primary/30"
+                >
                   <Calendar className="w-4 h-4 mr-2" />
                   Agendar Cita
                 </Button>
@@ -95,7 +106,10 @@ const Navbar = () => {
               ))}
               <div className="pt-4 flex flex-col gap-3">
                 <NavLink to="/login" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" className="w-full h-12 rounded-xl font-bold border-2">
+                  <Button
+                    variant="outline"
+                    className="w-full h-12 rounded-xl font-bold border-2"
+                  >
                     Iniciar Sesión
                   </Button>
                 </NavLink>

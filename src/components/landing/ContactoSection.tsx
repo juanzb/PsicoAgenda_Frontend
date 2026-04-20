@@ -1,8 +1,8 @@
-import { Button } from "../../ui/button/Button";
+import { Button } from "../ui/button/Button";
 import { CalendarPlus, MessageCircle, Phone } from "lucide-react";
 import { NavLink } from "react-router";
 
-const CTASection = () => {
+export default function ContactoSection() {
   return (
     <section id="contacto" className="py-16 bg-background">
       <div className="container mx-auto px-6">
@@ -65,6 +65,4 @@ const CTASection = () => {
       </div>
     </section>
   );
-};
-
-export default CTASection;
+}

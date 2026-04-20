@@ -1,37 +1,42 @@
-import { Phone, Mail, ExternalLink, ChevronRight } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  ExternalLink,
+  ChevronRight,
+  GraduationCap,
+} from "lucide-react";
 import type { ReactNode } from "react";
-import { Button } from "../button/Button";
-import { Card } from "../card/Card";
+import { Button } from "../../ui/button/Button";
+import { Card } from "../../ui/card/Card";
 
-export interface IPatient {
+export interface IDoctor {
   id: string;
   name: string;
   email: string;
   phone: string;
-  lastVisit: string;
-  nextAppointment?: string;
-  status: "active" | "completed" | "on-hold";
+  specialty: string;
+  experience: number;
+  status: "active" | "inactive" | "on-vacation";
   avatarUrl?: string;
-  age: number;
 }
 
-interface CardPatientsProps {
-  patient: IPatient;
+interface CardDoctorsProps {
+  doctor: IDoctor;
   isSelected?: boolean;
-  onOpenDetail: (patient: IPatient) => void;
+  onOpenDetail: (doctor: IDoctor) => void;
 }
 
-export function CardPatients({
-  patient,
+export function CardDoctors({
+  doctor,
   isSelected,
   onOpenDetail,
-}: CardPatientsProps): ReactNode {
-  const initial = patient.name.charAt(0).toUpperCase();
+}: CardDoctorsProps): ReactNode {
+  const initial = doctor.name.charAt(0).toUpperCase();
 
   const statusColors = {
     active: "bg-emerald-500",
-    completed: "bg-blue-500",
-    "on-hold": "bg-amber-500",
+    inactive: "bg-rose-500",
+    "on-vacation": "bg-amber-500",
   };
 
   return (
@@ -43,30 +48,31 @@ export function CardPatients({
       }`}
     >
       <div className="flex flex-col sm:flex-row items-center gap-4 p-2.5 px-4">
-        {/* Identificador con Inicial (Ergonómico) */}
+        {/* Identificador con Inicial */}
         <div className="flex items-center gap-4 flex-1 min-w-0 w-full">
           <div className="relative shrink-0">
             <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/10">
               <span className="text-sm font-black text-primary">{initial}</span>
             </div>
             <div
-              className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white ${statusColors[patient.status]}`}
+              className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white ${statusColors[doctor.status]}`}
             />
           </div>
 
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-bold text-foreground truncate">
-              {patient.name}
+              {doctor.name}
             </h3>
             <div className="flex items-center gap-2 mt-0.5">
               <span className="text-[10px] font-bold text-muted-foreground/60 uppercase">
-                {patient.age} años
+                {doctor.specialty}
               </span>
               <span className="text-[10px] text-muted-foreground/40 sm:hidden lg:inline">
                 •
               </span>
               <div className="hidden sm:flex lg:flex items-center gap-1 text-[10px] text-muted-foreground font-medium">
-                <Phone size={10} className="text-primary/40" /> {patient.phone}
+                <GraduationCap size={10} className="text-primary/40" />{" "}
+                {doctor.experience} años exp.
               </div>
             </div>
           </div>
@@ -77,8 +83,12 @@ export function CardPatients({
           <div className="flex items-center gap-2 text-muted-foreground">
             <Mail size={12} className="text-primary/40" />
             <span className="text-xs font-medium truncate max-w-50">
-              {patient.email}
+              {doctor.email}
             </span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Phone size={12} className="text-primary/40" />
+            <span className="text-xs font-medium truncate">{doctor.phone}</span>
           </div>
         </div>
 
@@ -90,7 +100,7 @@ export function CardPatients({
             className="rounded-xl font-bold h-9 px-4 group/btn"
             onClick={(e) => {
               e.stopPropagation();
-              onOpenDetail(patient);
+              onOpenDetail(doctor);
             }}
           >
             Detalle

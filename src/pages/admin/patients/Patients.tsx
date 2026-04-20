@@ -5,8 +5,8 @@ import { Pagination } from "../../../components/ui/pagination/Pagination";
 import {
   CardPatients,
   type IPatient,
-} from "../../../components/ui/card-patients/CardPatients";
-import { PatientDetail } from "../../../components/ui/patient-details/PatientDetail";
+} from "../../../components/admin/patients/CardPatients";
+import { PatientDetail } from "../../../components/admin/patients/PatientDetail";
 
 // Mock de datos de pacientes
 const mockPatients: IPatient[] = [
@@ -125,9 +125,9 @@ export function PatientsPage(): ReactNode {
   };
 
   return (
-    <div className="h-full w-full flex flex-col overflow-hidden max-w-[1600px] mx-auto relative">
+    <div className="h-full w-full max-w-400 mx-auto grid grid-rows-[auto_1fr_auto] overflow-hidden relative">
       {/* 1. SECCIÓN SUPERIOR: FILTROS (MÁS COMPACTA) */}
-      <div className="shrink-0 pb-3">
+      <div className="pb-3 shrink-0">
         <div className="flex flex-col md:flex-row gap-2 items-stretch md:items-center bg-white p-2 rounded-xl border border-border/40 shadow-sm">
           <div className="flex gap-2 flex-1">
             <Button
@@ -163,7 +163,7 @@ export function PatientsPage(): ReactNode {
       </div>
 
       {/* 2. SECCIÓN CENTRAL: LISTADO (SCROLL INTERNO) */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar px-0.5">
+      <div className="overflow-y-auto custom-scrollbar pr-1 min-h-0">
         {paginatedPatients.length > 0 ? (
           <div className="flex flex-col gap-1.5 pb-2">
             {paginatedPatients.map((patient) => (
@@ -176,11 +176,8 @@ export function PatientsPage(): ReactNode {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-border/60">
-            <Search
-              size={24}
-              className="text-muted-foreground/20 mx-auto mb-3"
-            />
+          <div className="h-full flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-border/60">
+            <Search size={24} className="text-muted-foreground/20 mb-3" />
             <h3 className="text-xs font-black text-muted-foreground uppercase tracking-widest">
               Sin resultados
             </h3>
@@ -189,7 +186,7 @@ export function PatientsPage(): ReactNode {
       </div>
 
       {/* 3. SECCIÓN INFERIOR: PAGINACIÓN (ESTANDARIZADA) */}
-      <div className="shrink-0 pt-3">
+      <div className="pt-3 shrink-0">
         <div className="bg-white p-1 rounded-xl border border-border/40 shadow-sm">
           <Pagination
             currentPage={currentPage}
@@ -206,6 +203,7 @@ export function PatientsPage(): ReactNode {
       </div>
 
       {/* 4. MODAL LATERAL (DRAWER) */}
+
       {selectedPatient && (
         <PatientDetail
           patient={selectedPatient}

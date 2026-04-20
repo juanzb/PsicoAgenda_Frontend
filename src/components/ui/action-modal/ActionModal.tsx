@@ -39,7 +39,13 @@ export function ActionModal({
     {
       icon: ReactNode;
       bgIcon: string;
-      btnVariant: "primary" | "secondary" | "destructive" | "ghost" | "link" | "outline";
+      btnVariant:
+        | "primary"
+        | "secondary"
+        | "destructive"
+        | "ghost"
+        | "link"
+        | "outline";
       btnClass?: string;
     }
   > = {
@@ -53,7 +59,8 @@ export function ActionModal({
       icon: <AlertTriangle className="text-amber-500" size={24} />,
       bgIcon: "bg-amber-500/10",
       btnVariant: "primary" as const, // Podríamos añadir una variante 'warning' al Button si fuera necesario
-      btnClass: "bg-amber-500 hover:bg-amber-600 border-none shadow-amber-500/20",
+      btnClass:
+        "bg-amber-500 hover:bg-amber-600 border-none shadow-amber-500/20",
     },
     success: {
       icon: <CheckCircle2 className="text-primary" size={24} />,

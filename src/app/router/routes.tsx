@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import { HomePage } from "../../pages/landing/home/Home";
-import { LoginPage } from "../../pages/auth/login/Login";
+import { LoginPage } from "../../pages/login/Login";
 import { DashboardPage } from "../../pages/admin/dashboard/Dashboard";
 import { DoctorsPage } from "../../pages/admin/doctors/Doctors";
 import { PatientsPage } from "../../pages/admin/patients/Patients";
 import { AppointmentsPage } from "../../pages/admin/appointments/Appointments";
 import { NotFoundPage } from "../../pages/not-found/NotFount";
-import { RegistrePage } from "../../pages/auth/register/Register";
+import { RegistrePage } from "../../pages/register/Register";
 import { AdminLayout } from "../../pages/admin/AdminLayout";
 import { PATHS } from "./paths";
 

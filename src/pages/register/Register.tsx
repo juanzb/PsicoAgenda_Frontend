@@ -10,7 +10,7 @@ import {
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { Button } from "../../../components/ui/button/Button";
+import { Button } from "../../components/ui/button/Button";
 import {
   Card,
   CardContent,
@@ -18,8 +18,8 @@ import {
   CardTitle,
   CardDescription,
   CardFooter,
-} from "../../../components/ui/card/Card";
-import { PATHS } from "../../../app/router/paths";
+} from "../../components/ui/card/Card";
+import { PATHS } from "../../app/router/paths";
 
 type TRegisterStep = "details" | "otp";
 
