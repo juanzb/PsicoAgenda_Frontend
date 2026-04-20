@@ -1,28 +1,78 @@
 import { useState, useMemo, type ReactNode } from "react";
-import { Sidebar } from "../../components/ui/sidebar/Sidebar";
+import { Sidebar, type IUser } from "../../components/ui/sidebar/Sidebar";
 import {
   Calendar,
+  ExternalLink,
   LayoutDashboard,
+  Quote,
   Settings,
   Stethoscope,
   Users,
+  CheckSquare,
+  BookOpen,
+  ClipboardList,
 } from "lucide-react";
 import { Outlet, useNavigate, useLocation } from "react-router";
 import { PATHS } from "../../app/router/paths";
 import { ActionModal } from "../../components/ui/action-modal/ActionModal";
+import { ActiveSessionDrawer, type ISessionData } from "../../components/admin/sessions/ActiveSessionDrawer";
+
+// Mock de usuario actual (esto vendría de un AuthContext)
+const MOCK_USER: IUser & { id: string; canViewAllCalendar?: boolean } = {
+  id: "DOC_1",
+  name: "Dr. Camilo Sánchez",
+  email: "contacto@psicoagenda.com",
+  role: "ADMIN", // Cambiar a 'DOCTOR' o 'PACIENTE' para probar
+  avatarUrl: "",
+  canViewAllCalendar: true, // Flag para doctores con permiso especial
+};
 
 export function AdminLayout(): ReactNode {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  
+  // ESTADO DE SESIÓN ACTIVA (MULTITASKING)
+  const [activeSession, setActiveSession] = useState<ISessionData | null>(null);
+  const [isSessionDrawerOpen, setIsSessionDrawerOpen] = useState(false);
+  const [isSessionMinimized, setIsSessionMinimized] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  const menuItems = useMemo(
-    () => [
+  // Función para iniciar una sesión (se puede llamar desde cualquier vista)
+  const handleStartSession = (patientId: string, patientName: string) => {
+    setActiveSession({
+      patientId,
+      patientName,
+      notes: "",
+      tasks: [],
+      status: "idle"
+    });
+    setIsSessionDrawerOpen(true);
+    setIsSessionMinimized(false);
+  };
+
+  const handleFinishSession = () => {
+    // Aquí se llamaría a la API para guardar la sesión
+    console.log("Sesión finalizada y guardada:", activeSession);
+    setActiveSession(null);
+    setIsSessionDrawerOpen(false);
+    // Podríamos redirigir a la historia clínica del paciente para ver el resultado
+  };
+
+  const menuItems = useMemo(() => {
+    const baseItems = [
       {
-        name: "Home",
+        name: "Portada",
         path: PATHS.HOME,
-        icon: <LayoutDashboard size={18} />,
+        icon: <ExternalLink size={18} />,
+        roles: ["ADMIN", "DOCTOR", "PACIENTE"],
+      },
+      // MENÚ PARA ADMIN Y DOCTOR
+      {
+        name: "Dashboard",
+        path: PATHS.ADMIN.DASHBOARD,
+        icon: <LayoutDashboard size={16} />,
         roles: ["ADMIN", "DOCTOR"],
       },
       {
@@ -32,32 +82,84 @@ export function AdminLayout(): ReactNode {
         roles: ["ADMIN"],
         subRoutes: [
           {
-            name: "Dashboard",
-            path: PATHS.ADMIN.DASHBOARD,
-            icon: <LayoutDashboard size={16} />,
-            roles: ["ADMIN", "DOCTOR"],
-          },
-          {
             name: "Pacientes",
             path: PATHS.ADMIN.PATIENTS,
             icon: <Users size={16} />,
-            roles: ["ADMIN"],
           },
           {
             name: "Doctores",
             path: PATHS.ADMIN.DOCTORS,
             icon: <Stethoscope size={16} />,
           },
+          {
+            name: "Calendario General",
+            path: PATHS.ADMIN.CALENDAR,
+            icon: <Calendar size={16} />,
+          },
+          {
+            name: "Citas",
+            path: PATHS.ADMIN.APPOINTMENTS,
+            icon: <Quote size={18} />,
+          },
         ],
+      },
+      {
+        name: "Mi Calendario",
+        path: PATHS.ADMIN.CALENDAR,
+        icon: <Calendar size={18} />,
+        roles: ["DOCTOR"],
+        // Si el doctor tiene permiso, le mostramos también el acceso al calendario general
+        subRoutes: MOCK_USER.canViewAllCalendar
+          ? [
+              {
+                name: "Mis Citas",
+                path: PATHS.ADMIN.CALENDAR,
+                icon: <Calendar size={16} />,
+              },
+              {
+                name: "Vista General",
+                path: PATHS.ADMIN.CALENDAR + "?view=all",
+                icon: <ClipboardList size={16} />,
+              },
+            ]
+          : undefined,
       },
       {
         name: "Citas",
         path: PATHS.ADMIN.APPOINTMENTS,
-        icon: <Calendar size={18} />,
+        icon: <Quote size={18} />,
+        roles: ["DOCTOR"],
       },
-    ],
-    [],
-  );
+
+      // MENÚ PARA PACIENTE
+      {
+        name: "Mi Panel",
+        path: PATHS.PATIENT.DASHBOARD,
+        icon: <LayoutDashboard size={18} />,
+        roles: ["PACIENTE"],
+      },
+      {
+        name: "Mi Historia",
+        path: PATHS.PATIENT.HISTORY,
+        icon: <BookOpen size={18} />,
+        roles: ["PACIENTE"],
+      },
+      {
+        name: "Mis Tareas",
+        path: PATHS.PATIENT.TASKS,
+        icon: <CheckSquare size={18} />,
+        roles: ["PACIENTE"],
+      },
+      {
+        name: "Agendar Cita",
+        path: PATHS.PATIENT.APPOINTMENTS,
+        icon: <Calendar size={18} />,
+        roles: ["PACIENTE"],
+      },
+    ];
+
+    return baseItems;
+  }, []);
 
   const currentRouteName = useMemo(() => {
     interface MenuItem {
@@ -93,12 +195,7 @@ export function AdminLayout(): ReactNode {
       <Sidebar
         appName="PsicoAgenda"
         items={menuItems}
-        dataUser={{
-          name: "Dr. Camilo Sánchez",
-          email: "contacto@psicoagenda.com",
-          role: "ADMIN",
-          avatarUrl: "",
-        }}
+        dataUser={MOCK_USER}
         onLogout={() => setIsLogoutModalOpen(true)}
         childrenClassName="bg-background w-full h-full flex flex-col overflow-hidden"
       >
@@ -129,11 +226,31 @@ export function AdminLayout(): ReactNode {
 
         {/* ÁREA DE CONTENIDO - Flex container para permitir scroll interno en las vistas */}
         <div className="flex-1 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-500">
-          <div className="felx flex-1 overflow-hidden p-2 md:p-3 lg:p-3 flex-col">
-            <Outlet />
+          <div className="flex flex-1 overflow-hidden p-2 md:p-3 lg:p-3 flex-col">
+            <Outlet context={{ handleStartSession }} />
           </div>
         </div>
       </Sidebar>
+
+      {/* DRAWER DE SESIÓN ACTIVA (MULTITASKING) */}
+      {activeSession && (
+        <ActiveSessionDrawer
+          session={activeSession}
+          isOpen={isSessionDrawerOpen}
+          isMinimized={isSessionMinimized}
+          onClose={() => {
+            if (activeSession.status === "active") {
+              setIsSessionMinimized(true);
+            } else {
+              setActiveSession(null);
+              setIsSessionDrawerOpen(false);
+            }
+          }}
+          onMinimize={setIsSessionMinimized}
+          onUpdateSession={(data) => setActiveSession(prev => prev ? ({ ...prev, ...data }) : null)}
+          onFinish={handleFinishSession}
+        />
+      )}
 
       <ActionModal
         isOpen={isLogoutModalOpen}

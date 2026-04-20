@@ -8,11 +8,14 @@ import {
   Phone,
   Search,
   History,
+  BookOpen,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { type IPatient } from "./CardPatients";
 import { Button } from "../../ui/button/Button";
+import { PATHS } from "../../../app/router/paths";
 
 interface PatientDetailProps {
   patient: IPatient;
@@ -24,7 +27,13 @@ export function PatientDetail({
   onClose,
 }: PatientDetailProps): ReactNode {
   const [dateRange, setDateRange] = useState({ from: "", to: "" });
+  const navigate = useNavigate();
   const initial = patient.name.charAt(0).toUpperCase();
+
+  const handleViewHistory = () => {
+    onClose();
+    navigate(PATHS.ADMIN.PATIENT_HISTORY.replace(":id", patient.id));
+  };
 
   const statusLabels = {
     active: "Activo",
@@ -203,20 +212,29 @@ export function PatientDetail({
         </div>
 
         {/* ACCIONES PIE DE PÁGINA */}
-        <div className="shrink-0 p-4 border-t border-border/40 grid grid-cols-2 gap-2 bg-white">
+        <div className="shrink-0 p-4 border-t border-border/40 flex flex-col gap-2 bg-white">
           <Button
-            variant="outline"
-            size="sm"
-            className="rounded-xl font-bold h-10 border-border/60"
+            onClick={handleViewHistory}
+            className="w-full rounded-xl font-bold h-10 gradient-primary shadow-md"
           >
-            <Edit size={14} className="mr-2" /> Editar
+            <BookOpen size={14} className="mr-2" /> Ver Historia Completa
           </Button>
-          <Button
-            size="sm"
-            className="rounded-xl font-bold h-10 gradient-primary shadow-md"
-          >
-            <MessageSquare size={14} className="mr-2" /> Chat
-          </Button>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-xl font-bold h-10 border-border/60"
+            >
+              <Edit size={14} className="mr-2" /> Editar
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-xl font-bold h-10 border-border/60"
+            >
+              <MessageSquare size={14} className="mr-2" /> Chat
+            </Button>
+          </div>
         </div>
       </div>
     </div>

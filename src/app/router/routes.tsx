@@ -5,6 +5,11 @@ import { DashboardPage } from "../../pages/admin/dashboard/Dashboard";
 import { DoctorsPage } from "../../pages/admin/doctors/Doctors";
 import { PatientsPage } from "../../pages/admin/patients/Patients";
 import { AppointmentsPage } from "../../pages/admin/appointments/Appointments";
+import { CalendarPage } from "../../pages/admin/calendar/Calendar";
+import { ClinicalHistoryPage } from "../../pages/admin/patients/ClinicalHistory";
+import { PatientDashboardPage } from "../../pages/patient/PatientDashboard";
+import { PatientHistoryPage } from "../../pages/patient/PatientHistory";
+import { PatientTasksPage } from "../../pages/patient/PatientTasks";
 import { NotFoundPage } from "../../pages/not-found/NotFount";
 import { RegistrePage } from "../../pages/register/Register";
 import { AdminLayout } from "../../pages/admin/AdminLayout";
@@ -41,7 +46,38 @@ export const routesApp = createBrowserRouter([
         Component: PatientsPage,
       },
       {
+        path: PATHS.ADMIN.PATIENT_HISTORY,
+        Component: ClinicalHistoryPage,
+      },
+      {
         path: PATHS.ADMIN.APPOINTMENTS,
+        Component: AppointmentsPage,
+      },
+      {
+        path: PATHS.ADMIN.CALENDAR,
+        Component: CalendarPage,
+      },
+    ],
+  },
+  {
+    path: PATHS.PATIENT.ROOT,
+    Component: AdminLayout, // Reutilizamos el layout por ahora, ajustaremos el menú
+    children: [
+      {
+        index: true,
+        path: PATHS.PATIENT.DASHBOARD,
+        Component: PatientDashboardPage,
+      },
+      {
+        path: PATHS.PATIENT.HISTORY,
+        Component: PatientHistoryPage,
+      },
+      {
+        path: PATHS.PATIENT.TASKS,
+        Component: PatientTasksPage,
+      },
+      {
+        path: PATHS.PATIENT.APPOINTMENTS,
         Component: AppointmentsPage,
       },
     ],
