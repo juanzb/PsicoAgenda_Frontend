@@ -9,11 +9,14 @@ import {
   GraduationCap,
   CalendarDays,
   CheckCircle2,
+  BookOpen,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { type IDoctor } from "./CardDoctors";
 import { Button } from "../../ui/button/Button";
+import { PATHS } from "../../../app/router/paths";
 
 interface DoctorDetailProps {
   doctor: IDoctor;
@@ -26,8 +29,14 @@ export function DoctorDetail({
   doctor,
   onClose,
 }: DoctorDetailProps): ReactNode {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabType>("schedule");
   const initial = doctor.name.charAt(0).toUpperCase();
+
+  const handleViewFullData = () => {
+    onClose();
+    navigate(PATHS.ADMIN.DOCTOR_DATA.replace(":id", doctor.id));
+  };
 
   const statusLabels = {
     active: "Activo",
@@ -279,19 +288,13 @@ export function DoctorDetail({
         </div>
 
         {/* ACCIONES */}
-        <div className="shrink-0 p-4 border-t border-border/40 grid grid-cols-2 gap-2 bg-white">
+        <div className="shrink-0 p-4 border-t border-border/40 flex flex-col gap-2 bg-white">
           <Button
+            onClick={handleViewFullData}
             variant="outline"
-            size="sm"
-            className="rounded-md font-bold h-10 border-border/60"
+            className="w-full rounded-sm font-bold h-10 border-border/60 text-muted-foreground hover:text-primary hover:border-primary/20 transition-all"
           >
-            <Edit size={14} className="mr-2" /> Editar
-          </Button>
-          <Button
-            size="sm"
-            className="rounded-md font-bold h-10 gradient-primary shadow-md"
-          >
-            <MessageSquare size={14} className="mr-2" /> Mensaje
+            <BookOpen size={14} className="mr-2" /> Ver Data Completa
           </Button>
         </div>
       </div>

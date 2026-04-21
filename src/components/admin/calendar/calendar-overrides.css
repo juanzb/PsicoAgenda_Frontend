@@ -8,7 +8,7 @@
 }
 
 .rbc-header {
-  @apply !py-4 !px-2 !border-b !border-border/40 !text-[10px] !font-black !text-muted-foreground !uppercase !tracking-widest !bg-muted/20;
+  @apply !py-2 !px-1 !border-b !border-border/40 !text-[9px] !font-black !text-muted-foreground !uppercase !tracking-widest !bg-muted/10;
 }
 
 .rbc-header + .rbc-header {
@@ -36,7 +36,8 @@
 }
 
 .rbc-event {
-  @apply !bg-primary/90 !text-white !border-none !rounded-lg !px-2 !py-1 !shadow-sm !transition-transform hover:scale-[1.02] active:scale-95;
+  @apply !bg-primary/90 !text-white !border-none !rounded-md !px-1.5 !py-0.5 !shadow-sm !transition-transform hover:scale-[1.01] active:scale-95;
+  margin-top: 1px !important;
 }
 
 .rbc-event-label {
@@ -52,11 +53,11 @@
 }
 
 .rbc-calendar .rbc-toolbar {
-  @apply !mb-6 !gap-4 !flex-wrap;
+  @apply !mb-3 !gap-2 !flex-wrap;
 }
 
 .rbc-toolbar button {
-  @apply !px-4 !py-2 !text-xs !font-bold !text-muted-foreground !border !border-border/60 !rounded-md !transition-all hover:bg-muted hover:text-foreground active:scale-95;
+  @apply !px-3 !py-1.5 !text-[10px] !font-bold !text-muted-foreground !border !border-border/60 !rounded-md !transition-all hover:bg-muted hover:text-foreground active:scale-95;
 }
 
 .rbc-toolbar button.rbc-active {
@@ -68,9 +69,14 @@
 }
 
 .rbc-toolbar-label {
-  @apply !text-lg !font-bold !text-foreground;
+  @apply !text-base !font-bold !text-foreground;
 }
 
 .rbc-month-row {
   @apply !border-border/40;
+  min-height: 80px !important;
+}
+
+.rbc-date-cell {
+  @apply !p-1 !text-[10px] !font-black !text-muted-foreground/60;
 }

@@ -7,6 +7,7 @@ import { PatientsPage } from "../../pages/admin/patients/Patients";
 import { AppointmentsPage } from "../../pages/admin/appointments/Appointments";
 import { CalendarPage } from "../../pages/admin/calendar/Calendar";
 import { PatientDataPage } from "../../pages/admin/patients/PatientData";
+import { DoctorDataPage } from "../../pages/admin/doctors/DoctorData";
 import { PatientDashboardPage } from "../../pages/patient/PatientDashboard";
 import { PatientHistoryPage } from "../../pages/patient/PatientHistory";
 import { PatientTasksPage } from "../../pages/patient/PatientTasks";
@@ -42,6 +43,10 @@ export const routesApp = createBrowserRouter([
         Component: DoctorsPage,
       },
       {
+        path: PATHS.ADMIN.DOCTOR_DATA,
+        Component: DoctorDataPage,
+      },
+      {
         path: PATHS.ADMIN.PATIENTS,
         Component: PatientsPage,
       },
@@ -61,7 +66,7 @@ export const routesApp = createBrowserRouter([
   },
   {
     path: PATHS.PATIENT.ROOT,
-    Component: AdminLayout, 
+    Component: AdminLayout,
     children: [
       {
         index: true,

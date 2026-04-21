@@ -18,9 +18,10 @@ export function DoctorsPage(): ReactNode {
   const doctors = mockStorage.getDoctors();
 
   const filteredDoctors = useMemo(() => {
-    return doctors.filter((d) =>
-      d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.specialty.toLowerCase().includes(searchTerm.toLowerCase())
+    return doctors.filter(
+      (d) =>
+        d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        d.specialty.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [doctors, searchTerm]);
 
@@ -126,7 +127,7 @@ export function DoctorsPage(): ReactNode {
         />
       )}
 
-      <DoctorModal 
+      <DoctorModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveDoctor}

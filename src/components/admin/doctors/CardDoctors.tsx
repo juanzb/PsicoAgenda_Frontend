@@ -4,10 +4,13 @@ import {
   ExternalLink,
   ChevronRight,
   GraduationCap,
+  FileText,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { useNavigate } from "react-router";
 import { Button } from "../../ui/button/Button";
 import { Card } from "../../ui/card/Card";
+import { PATHS } from "../../../app/router/paths";
 
 export interface IDoctor {
   id: string;
@@ -31,7 +34,13 @@ export function CardDoctors({
   isSelected,
   onOpenDetail,
 }: CardDoctorsProps): ReactNode {
+  const navigate = useNavigate();
   const initial = doctor.name.charAt(0).toUpperCase();
+
+  const handleGoToData = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(PATHS.ADMIN.DOCTOR_DATA.replace(":id", doctor.id));
+  };
 
   const statusColors = {
     active: "bg-emerald-500",
@@ -41,7 +50,7 @@ export function CardDoctors({
 
   return (
     <Card
-      className={`group relative border-border/40 transition-all duration-300 overflow-hidden cursor-pointer ${
+      className={`group relative border-border/40 transition-all duration-300 overflow-hidden cursor-pointer rounded-md ${
         isSelected
           ? "border-primary bg-primary/3 shadow-sm"
           : "hover:border-primary/20 hover:bg-muted/30"
@@ -51,7 +60,7 @@ export function CardDoctors({
         {/* Identificador con Inicial */}
         <div className="flex items-center gap-4 flex-1 min-w-0 w-full">
           <div className="relative shrink-0">
-            <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center border border-primary/10">
+            <div className="w-9 h-9 rounded-sm bg-primary/10 flex items-center justify-center border border-primary/10">
               <span className="text-sm font-black text-primary">{initial}</span>
             </div>
             <div
@@ -95,15 +104,25 @@ export function CardDoctors({
         {/* Botón de Acción */}
         <div className="shrink-0 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border/40 flex justify-end items-center gap-3">
           <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-sm font-bold h-9 px-4 text-primary hover:bg-primary/5"
+            onClick={handleGoToData}
+          >
+            <FileText size={14} className="mr-2" />
+            Data
+          </Button>
+          
+          <Button
             variant={isSelected ? "primary" : "ghost"}
             size="sm"
-            className="rounded-md font-bold h-9 px-4 group/btn"
+            className="rounded-sm font-bold h-9 px-4 group/btn"
             onClick={(e) => {
               e.stopPropagation();
               onOpenDetail(doctor);
             }}
           >
-            Detalle
+            Vista Previa
             <ExternalLink
               size={14}
               className={`ml-2 transition-transform ${isSelected ? "scale-110" : "group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"}`}

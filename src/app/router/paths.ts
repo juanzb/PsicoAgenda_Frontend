@@ -6,6 +6,7 @@ export const PATHS = {
     ROOT: "/admin",
     DASHBOARD: "/admin/dashboard",
     DOCTORS: "/admin/doctors",
+    DOCTOR_DATA: "/admin/doctors/:id/data",
     PATIENTS: "/admin/patients",
     PATIENT_DATA: "/admin/patients/:id/data",
     APPOINTMENTS: "/admin/appointments",

@@ -4,13 +4,14 @@ import {
   Calendar,
   ExternalLink,
   LayoutDashboard,
-  Quote,
   Settings,
   Stethoscope,
   Users,
   CheckSquare,
   BookOpen,
   ClipboardList,
+  Clock,
+  BrainCog,
 } from "lucide-react";
 import { Outlet, useNavigate, useLocation } from "react-router";
 import { PATHS } from "../../app/router/paths";
@@ -47,6 +48,10 @@ export function AdminLayout(): ReactNode {
     setActiveSession({
       patientId,
       patientName,
+      serviceType: "Sesión Individual",
+      reason: "",
+      goals: "",
+      mood: 5,
       notes: "",
       tasks: [],
       status: "idle",
@@ -102,7 +107,7 @@ export function AdminLayout(): ReactNode {
           {
             name: "Citas",
             path: PATHS.ADMIN.APPOINTMENTS,
-            icon: <Quote size={18} />,
+            icon: <BrainCog size={18} />,
           },
         ],
       },
@@ -130,7 +135,13 @@ export function AdminLayout(): ReactNode {
       {
         name: "Citas",
         path: PATHS.ADMIN.APPOINTMENTS,
-        icon: <Quote size={18} />,
+        icon: <BrainCog size={18} />,
+        roles: ["DOCTOR"],
+      },
+      {
+        name: "Horarios",
+        path: PATHS.ADMIN.DOCTOR_DATA.replace(":id", MOCK_USER.id),
+        icon: <Clock size={18} />,
         roles: ["DOCTOR"],
       },
 

@@ -38,17 +38,17 @@ export function CardPatients({
 
   return (
     <Card
-      className={`group relative border-border/40 transition-all duration-300 overflow-hidden cursor-pointer ${
+      className={`group relative border-border/40 transition-all duration-300 overflow-hidden cursor-pointer rounded-md ${
         isSelected
           ? "border-primary bg-primary/3 shadow-sm"
           : "hover:border-primary/20 hover:bg-muted/30"
       }`}
     >
       <div className="flex flex-col sm:flex-row items-center gap-4 p-2.5 px-4">
-        {/* Identificador con Inicial (Ergonómico) */}
+        {/* Identificador con Inicial */}
         <div className="flex items-center gap-4 flex-1 min-w-0 w-full">
           <div className="relative shrink-0">
-            <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center border border-primary/10">
+            <div className="w-9 h-9 rounded-sm bg-primary/10 flex items-center justify-center border border-primary/10">
               <span className="text-sm font-black text-primary">{initial}</span>
             </div>
             <div
@@ -64,12 +64,6 @@ export function CardPatients({
               <span className="text-[10px] font-bold text-muted-foreground/60 uppercase">
                 {patient.age} años
               </span>
-              <span className="text-[10px] text-muted-foreground/40 sm:hidden lg:inline">
-                •
-              </span>
-              <div className="hidden sm:flex lg:flex items-center gap-1 text-[10px] text-muted-foreground font-medium">
-                <Phone size={10} className="text-primary/40" /> {patient.phone}
-              </div>
             </div>
           </div>
         </div>
@@ -82,6 +76,10 @@ export function CardPatients({
               {patient.email}
             </span>
           </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Phone size={12} className="text-primary/40" />
+            <span className="text-xs font-medium truncate">{patient.phone}</span>
+          </div>
         </div>
 
         {/* Botón de Acción */}
@@ -89,7 +87,7 @@ export function CardPatients({
           <Button
             variant="ghost"
             size="sm"
-            className="rounded-md font-bold h-9 px-4 text-primary hover:bg-primary/5"
+            className="rounded-sm font-bold h-9 px-4 text-primary hover:bg-primary/5"
             onClick={(e) => {
               e.stopPropagation();
               navigate(`/admin/patients/${patient.id}/data`);
@@ -101,7 +99,7 @@ export function CardPatients({
           <Button
             variant={isSelected ? "primary" : "ghost"}
             size="sm"
-            className="rounded-md font-bold h-9 px-4 group/btn"
+            className="rounded-sm font-bold h-9 px-4 group/btn"
             onClick={(e) => {
               e.stopPropagation();
               onOpenDetail(patient);
