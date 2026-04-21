@@ -43,7 +43,7 @@ export function PatientTasksPage(): ReactNode {
   return (
     <div className="h-full overflow-y-auto custom-scrollbar p-6 space-y-8 pb-20">
       <header className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shadow-sm">
+        <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary shadow-sm">
           <CheckSquare size={24} />
         </div>
         <div>
@@ -63,7 +63,7 @@ export function PatientTasksPage(): ReactNode {
               <div 
                 key={task.id}
                 onClick={() => toggleTask(task.id)}
-                className="group cursor-pointer bg-white p-5 rounded-3xl border border-border/40 shadow-sm transition-all hover:shadow-md hover:border-primary/20 flex items-start gap-4"
+                className="group cursor-pointer bg-white p-5 rounded-lg border border-border/40 shadow-sm transition-all hover:shadow-md hover:border-primary/20 flex items-start gap-4"
               >
                 <div className="w-6 h-6 rounded-lg border-2 border-primary/20 flex items-center justify-center group-hover:border-primary transition-colors mt-0.5 shrink-0">
                   <div className="w-2.5 h-2.5 rounded-sm bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -94,7 +94,7 @@ export function PatientTasksPage(): ReactNode {
               <div 
                 key={task.id}
                 onClick={() => toggleTask(task.id)}
-                className="cursor-pointer bg-muted/20 p-5 rounded-3xl border border-border/20 flex items-start gap-4 opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
+                className="cursor-pointer bg-muted/20 p-5 rounded-lg border border-border/20 flex items-start gap-4 opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
               >
                 <div className="w-6 h-6 rounded-lg bg-emerald-500 flex items-center justify-center mt-0.5 shrink-0">
                   <CheckSquare size={14} className="text-white" />

@@ -1,3 +1,4 @@
+@reference "../../../index.css";
 @import "react-big-calendar/lib/css/react-big-calendar.css";
 
 /* Overrides para integrar con PsicoAgenda (Tailwind) */
@@ -7,69 +8,69 @@
 }
 
 .rbc-header {
-  @apply py-4 px-2 border-b border-border/40 text-[10px] font-black text-muted-foreground uppercase tracking-widest bg-muted/20 !important;
+  @apply !py-4 !px-2 !border-b !border-border/40 !text-[10px] !font-black !text-muted-foreground !uppercase !tracking-widest !bg-muted/20;
 }
 
 .rbc-header + .rbc-header {
-  @apply border-l border-border/40 !important;
+  @apply !border-l !border-border/40;
 }
 
 .rbc-month-view {
-  @apply border-border/40 rounded-2xl overflow-hidden bg-white shadow-sm !important;
+  @apply !border-border/40 !rounded-lg !overflow-hidden !bg-white !shadow-sm;
 }
 
 .rbc-day-bg {
-  @apply border-border/40 transition-colors duration-200 !important;
+  @apply !border-border/40 !transition-colors !duration-200;
 }
 
 .rbc-day-bg:hover {
-  @apply bg-primary/5 !important;
+  @apply !bg-primary/5;
 }
 
 .rbc-today {
-  @apply bg-primary/5 !important;
+  @apply !bg-primary/5;
 }
 
 .rbc-off-range-bg {
-  @apply bg-muted/10 !important;
+  @apply !bg-muted/10;
 }
 
 .rbc-event {
-  @apply bg-primary/90 text-white border-none rounded-lg px-2 py-1 shadow-sm transition-transform hover:scale-[1.02] active:scale-95 !important;
+  @apply !bg-primary/90 !text-white !border-none !rounded-lg !px-2 !py-1 !shadow-sm !transition-transform hover:scale-[1.02] active:scale-95;
 }
 
 .rbc-event-label {
-  @apply text-[9px] font-bold opacity-80 !important;
+  @apply !text-[9px] !font-bold !opacity-80;
 }
 
 .rbc-event-content {
-  @apply text-[10px] font-bold truncate !important;
+  @apply !text-[10px] !font-bold !truncate;
 }
 
 .rbc-show-more {
-  @apply text-[10px] font-black text-primary uppercase bg-primary/10 px-2 py-0.5 rounded-md mt-1 !important;
+  @apply !text-[10px] !font-black !text-primary !uppercase !bg-primary/10 !px-2 !py-0.5 !rounded-md !mt-1;
 }
 
-.rbc-toolbar {
-  @apply mb-6 gap-4 flex-wrap !important;
+.rbc-calendar .rbc-toolbar {
+  @apply !mb-6 !gap-4 !flex-wrap;
 }
 
 .rbc-toolbar button {
-  @apply px-4 py-2 text-xs font-bold text-muted-foreground border border-border/60 rounded-xl transition-all hover:bg-muted hover:text-foreground active:scale-95 !important;
+  @apply !px-4 !py-2 !text-xs !font-bold !text-muted-foreground !border !border-border/60 !rounded-md !transition-all hover:bg-muted hover:text-foreground active:scale-95;
 }
 
 .rbc-toolbar button.rbc-active {
-  @apply bg-primary text-white border-primary shadow-lg shadow-primary/20 !important;
+  @apply !bg-primary !text-white !border-primary !shadow-lg !shadow-primary/20;
 }
 
 .rbc-btn-group {
-  @apply flex gap-1 !important;
+  @apply !flex !gap-1;
 }
 
 .rbc-toolbar-label {
-  @apply text-lg font-bold text-foreground !important;
+  @apply !text-lg !font-bold !text-foreground;
 }
 
 .rbc-month-row {
-  @apply border-border/40 !important;
+  @apply !border-border/40;
 }

@@ -18,7 +18,7 @@ export function NotFoundPage(): ReactNode {
           <Compass className="w-16 h-16 text-primary animate-in zoom-in-50 duration-1000" strokeWidth={1.5} />
           
           {/* Badge de Alerta Flotante */}
-          <div className="absolute -top-1 -right-1 bg-white p-1.5 rounded-xl shadow-lg border border-border/40">
+          <div className="absolute -top-1 -right-1 bg-white p-1.5 rounded-md shadow-lg border border-border/40">
             <AlertCircle className="w-5 h-5 text-amber-500" />
           </div>
         </div>
@@ -42,7 +42,7 @@ export function NotFoundPage(): ReactNode {
             onClick={() => navigate(-1)}
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto rounded-2xl font-black text-[10px] uppercase tracking-widest h-12 border border-border/40"
+            className="w-full sm:w-auto rounded-lg font-black text-[10px] uppercase tracking-widest h-12 border border-border/40"
           >
             <MoveLeft className="mr-2 w-4 h-4" /> Volver atrás
           </Button>
@@ -50,7 +50,7 @@ export function NotFoundPage(): ReactNode {
           <Button
             onClick={() => navigate(PATHS.HOME)}
             size="lg"
-            className="w-full sm:w-auto rounded-2xl font-black text-[10px] uppercase tracking-widest h-12 gradient-primary shadow-lg shadow-primary/20"
+            className="w-full sm:w-auto rounded-lg font-black text-[10px] uppercase tracking-widest h-12 gradient-primary shadow-lg shadow-primary/20"
           >
             Ir al Inicio
           </Button>

@@ -87,7 +87,7 @@ export function ActionModal({
       />
 
       {/* Contenedor del Modal */}
-      <div className="relative w-full max-w-md bg-background rounded-3xl shadow-elevated border border-border overflow-hidden animate-in fade-in scale-in duration-300">
+      <div className="relative w-full max-w-md bg-background rounded-lg shadow-elevated border border-border overflow-hidden animate-in fade-in scale-in duration-300">
         {/* Header con botón de cerrar */}
         <div className="flex justify-end p-4 absolute right-0 top-0 z-10">
           <button
@@ -102,7 +102,7 @@ export function ActionModal({
           {/* Icono y Título */}
           <div className="flex flex-col items-center text-center space-y-4">
             <div
-              className={`w-16 h-16 ${currentVariant.bgIcon} rounded-2xl flex items-center justify-center mb-2`}
+              className={`w-16 h-16 ${currentVariant.bgIcon} rounded-lg flex items-center justify-center mb-2`}
             >
               {currentVariant.icon}
             </div>
@@ -119,7 +119,7 @@ export function ActionModal({
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <Button
               variant="secondary"
-              className="flex-1 rounded-2xl h-12"
+              className="flex-1 rounded-lg h-12"
               onClick={onCancel}
               disabled={isLoading}
             >
@@ -127,7 +127,7 @@ export function ActionModal({
             </Button>
             <Button
               variant={currentVariant.btnVariant}
-              className={`flex-1 rounded-2xl h-12 shadow-lg ${currentVariant.btnClass || ""}`}
+              className={`flex-1 rounded-lg h-12 shadow-lg ${currentVariant.btnClass || ""}`}
               onClick={onAction}
               isLoading={isLoading}
             >

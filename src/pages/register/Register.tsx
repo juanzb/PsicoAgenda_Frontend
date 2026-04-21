@@ -79,7 +79,7 @@ export function RegistrePage(): ReactNode {
       <div className="w-full max-w-md animate-fade-in relative z-10">
         <div className="text-center mb-8">
           <NavLink to="/" className="inline-flex items-center gap-2 group">
-            <div className="w-12 h-12 rounded-2xl gradient-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 rounded-lg gradient-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
               <Brain className="w-7 h-7 text-white" />
             </div>
             <span className="text-3xl font-bold text-foreground">
@@ -89,7 +89,7 @@ export function RegistrePage(): ReactNode {
         </div>
 
         {step === "details" ? (
-          <Card className="border-none shadow-elevated overflow-hidden rounded-3xl">
+          <Card className="border-none shadow-elevated overflow-hidden rounded-lg">
             <CardHeader className="pt-8 pb-4 text-center">
               <CardTitle className="text-2xl font-bold">
                 Crear tu cuenta
@@ -113,7 +113,7 @@ export function RegistrePage(): ReactNode {
                       type="text"
                       required
                       placeholder="Juan Pérez"
-                      className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                      className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                     />
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export function RegistrePage(): ReactNode {
                       type="email"
                       required
                       placeholder="ejemplo@correo.com"
-                      className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                      className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                     />
                   </div>
                 </div>
@@ -147,7 +147,7 @@ export function RegistrePage(): ReactNode {
                       type="tel"
                       required
                       placeholder="+57 300 000 0000"
-                      className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                      className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                     />
                   </div>
                 </div>
@@ -164,7 +164,7 @@ export function RegistrePage(): ReactNode {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pr-10 pl-4 py-3 bg-muted/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                        className="w-full pr-10 pl-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                       />
                       <button
                         type="button"
@@ -191,7 +191,7 @@ export function RegistrePage(): ReactNode {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="••••••••"
-                        className={`w-full pr-10 pl-4 py-3 bg-muted/50 border rounded-2xl focus:outline-none focus:ring-2 transition-all text-sm ${
+                        className={`w-full pr-10 pl-4 py-3 bg-muted/50 border rounded-lg focus:outline-none focus:ring-2 transition-all text-sm ${
                           confirmPassword && !passwordsMatch
                             ? "border-destructive focus:ring-destructive/20"
                             : "border-border focus:ring-primary/20 focus:border-primary"
@@ -222,7 +222,7 @@ export function RegistrePage(): ReactNode {
 
                 <Button
                   type="submit"
-                  className="w-full rounded-2xl h-12 text-base font-bold gradient-primary shadow-lg shadow-primary/20 mt-4"
+                  className="w-full rounded-lg h-12 text-base font-bold gradient-primary shadow-lg shadow-primary/20 mt-4"
                   isLoading={isLoading}
                   disabled={!passwordsMatch || !password}
                 >
@@ -244,9 +244,9 @@ export function RegistrePage(): ReactNode {
             </CardFooter>
           </Card>
         ) : (
-          <Card className="border-none shadow-elevated overflow-hidden rounded-3xl animate-slide-up">
+          <Card className="border-none shadow-elevated overflow-hidden rounded-lg animate-slide-up">
             <CardHeader className="pt-8 pb-4 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <ShieldCheck className="w-8 h-8 text-primary" />
               </div>
               <CardTitle className="text-2xl font-bold">
@@ -270,7 +270,7 @@ export function RegistrePage(): ReactNode {
                       maxLength={1}
                       value={digit}
                       onChange={(e) => handleOtpChange(index, e.target.value)}
-                      className="w-11 h-13 text-center text-xl font-bold bg-muted/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                      className="w-11 h-13 text-center text-xl font-bold bg-muted/50 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                     />
                   ))}
                 </div>
@@ -278,7 +278,7 @@ export function RegistrePage(): ReactNode {
                 <div className="space-y-4">
                   <Button
                     type="submit"
-                    className="w-full rounded-2xl h-12 text-base font-bold gradient-primary shadow-lg shadow-primary/20"
+                    className="w-full rounded-lg h-12 text-base font-bold gradient-primary shadow-lg shadow-primary/20"
                     isLoading={isLoading}
                     disabled={otp.some((d) => d === "")}
                   >

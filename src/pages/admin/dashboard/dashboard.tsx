@@ -34,10 +34,10 @@ export function DashboardPage(): ReactNode {
 
       {/* Secciones de Contenido Secundario más discretas */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 bg-card/40 border border-border/30 p-5 rounded-2xl min-h-55 flex items-center justify-center text-muted-foreground/30 text-xs font-bold tracking-widest uppercase border-dashed">
+        <div className="lg:col-span-2 bg-card/40 border border-border/30 p-5 rounded-lg min-h-55 flex items-center justify-center text-muted-foreground/30 text-xs font-bold tracking-widest uppercase border-dashed">
           Actividad Semanal
         </div>
-        <div className="bg-card/40 border border-border/30 p-5 rounded-2xl min-h-55 flex items-center justify-center text-muted-foreground/30 text-xs font-bold tracking-widest uppercase border-dashed text-center px-8">
+        <div className="bg-card/40 border border-border/30 p-5 rounded-lg min-h-55 flex items-center justify-center text-muted-foreground/30 text-xs font-bold tracking-widest uppercase border-dashed text-center px-8">
           Próximas Citas
         </div>
       </div>

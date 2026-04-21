@@ -83,7 +83,7 @@ const ServicesSection = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardHeader className="p-6">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors duration-300">
+                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors duration-300">
                   <service.icon className="w-6 h-6 text-primary group-hover:text-white transition-colors duration-300" />
                 </div>
                 <CardTitle className="text-lg font-black group-hover:text-primary transition-colors">

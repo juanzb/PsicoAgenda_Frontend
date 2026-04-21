@@ -32,7 +32,7 @@ const HeroSection = () => {
             <NavLink to="/register">
               <Button
                 size="lg"
-                className="rounded-xl px-10 shadow-xl shadow-primary/20 gradient-primary font-bold h-14"
+                className="rounded-md px-10 shadow-xl shadow-primary/20 gradient-primary font-bold h-14"
               >
                 <CalendarPlus className="w-5 h-5 mr-2" />
                 Agendar Mi Cita
@@ -42,7 +42,7 @@ const HeroSection = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-xl px-10 font-bold h-14 border-2 border-border hover:border-primary hover:text-primary transition-all"
+                className="rounded-md px-10 font-bold h-14 border-2 border-border hover:border-primary hover:text-primary transition-all"
               >
                 Ver Especialidades
               </Button>
@@ -80,7 +80,7 @@ const HeroSection = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center">
                 <CheckCircle2 className="w-6 h-6 text-primary" />
               </div>
               <div>
@@ -103,9 +103,9 @@ const HeroSection = () => {
               className="w-full h-137.5 object-cover"
             />
             {/* Floating glass card */}
-            <div className="absolute bottom-6 left-6 right-6 bg-white/80 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-white/40">
+            <div className="absolute bottom-6 left-6 right-6 bg-white/80 backdrop-blur-xl p-5 rounded-lg shadow-xl border border-white/40">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
+                <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
                   <Brain className="w-5 h-5 text-white" />
                 </div>
                 <div>

@@ -1,5 +1,6 @@
-import { Phone, Mail, ExternalLink, ChevronRight } from "lucide-react";
+import { Phone, Mail, ExternalLink, ChevronRight, FileText } from "lucide-react";
 import type { ReactNode } from "react";
+import { useNavigate } from "react-router";
 import { Button } from "../../ui/button/Button";
 import { Card } from "../../ui/card/Card";
 
@@ -26,6 +27,7 @@ export function CardPatients({
   isSelected,
   onOpenDetail,
 }: CardPatientsProps): ReactNode {
+  const navigate = useNavigate();
   const initial = patient.name.charAt(0).toUpperCase();
 
   const statusColors = {
@@ -46,7 +48,7 @@ export function CardPatients({
         {/* Identificador con Inicial (Ergonómico) */}
         <div className="flex items-center gap-4 flex-1 min-w-0 w-full">
           <div className="relative shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/10">
+            <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center border border-primary/10">
               <span className="text-sm font-black text-primary">{initial}</span>
             </div>
             <div
@@ -85,15 +87,27 @@ export function CardPatients({
         {/* Botón de Acción */}
         <div className="shrink-0 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border/40 flex justify-end items-center gap-3">
           <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-md font-bold h-9 px-4 text-primary hover:bg-primary/5"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/admin/patients/${patient.id}/data`);
+            }}
+          >
+            <FileText size={14} className="mr-2" />
+            Data
+          </Button>
+          <Button
             variant={isSelected ? "primary" : "ghost"}
             size="sm"
-            className="rounded-xl font-bold h-9 px-4 group/btn"
+            className="rounded-md font-bold h-9 px-4 group/btn"
             onClick={(e) => {
               e.stopPropagation();
               onOpenDetail(patient);
             }}
           >
-            Detalle
+            Vista Previa
             <ExternalLink
               size={14}
               className={`ml-2 transition-transform ${isSelected ? "scale-110" : "group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"}`}

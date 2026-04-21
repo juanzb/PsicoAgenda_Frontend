@@ -6,7 +6,7 @@ import { DoctorsPage } from "../../pages/admin/doctors/Doctors";
 import { PatientsPage } from "../../pages/admin/patients/Patients";
 import { AppointmentsPage } from "../../pages/admin/appointments/Appointments";
 import { CalendarPage } from "../../pages/admin/calendar/Calendar";
-import { ClinicalHistoryPage } from "../../pages/admin/patients/ClinicalHistory";
+import { PatientDataPage } from "../../pages/admin/patients/PatientData";
 import { PatientDashboardPage } from "../../pages/patient/PatientDashboard";
 import { PatientHistoryPage } from "../../pages/patient/PatientHistory";
 import { PatientTasksPage } from "../../pages/patient/PatientTasks";
@@ -46,8 +46,8 @@ export const routesApp = createBrowserRouter([
         Component: PatientsPage,
       },
       {
-        path: PATHS.ADMIN.PATIENT_HISTORY,
-        Component: ClinicalHistoryPage,
+        path: PATHS.ADMIN.PATIENT_DATA,
+        Component: PatientDataPage,
       },
       {
         path: PATHS.ADMIN.APPOINTMENTS,
@@ -61,7 +61,7 @@ export const routesApp = createBrowserRouter([
   },
   {
     path: PATHS.PATIENT.ROOT,
-    Component: AdminLayout, // Reutilizamos el layout por ahora, ajustaremos el menú
+    Component: AdminLayout, 
     children: [
       {
         index: true,

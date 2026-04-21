@@ -29,12 +29,14 @@ export interface ICalendarEvent {
 interface CustomCalendarProps {
   events: ICalendarEvent[];
   onSelectEvent?: (event: ICalendarEvent) => void;
+  onSelectSlot?: (slotInfo: { start: Date; end: Date }) => void;
   defaultView?: View;
 }
 
 export function CustomCalendar({
   events,
   onSelectEvent,
+  onSelectSlot,
   defaultView = "month",
 }: CustomCalendarProps): ReactNode {
   const { messages } = useMemo(
@@ -59,11 +61,12 @@ export function CustomCalendar({
   );
 
   const eventStyleGetter = (event: ICalendarEvent) => {
-    let backgroundColor = "#148874"; // Primary emerald
-    if (event.status === "cancelled") backgroundColor = "#ef4444"; // Destructive
+    let backgroundColor = "var(--color-primary)"; 
+    if (event.status === "cancelled") backgroundColor = "var(--color-destructive)";
     if (event.status === "pending") backgroundColor = "#f59e0b"; // Amber
 
     return {
+      className: "rounded-md",
       style: {
         backgroundColor,
       },
@@ -80,7 +83,9 @@ export function CustomCalendar({
         style={{ height: "100%" }}
         messages={messages}
         culture="es-ES"
-        onSelectEvent={(e) => onSelectEvent?.(e as ICalendarEvent)}
+        selectable
+        onSelectSlot={onSelectSlot}
+        onSelectEvent={(e: object) => onSelectEvent?.(e as ICalendarEvent)}
         eventPropGetter={eventStyleGetter}
         defaultView={defaultView}
         views={["month", "week", "day", "agenda"]}

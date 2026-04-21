@@ -40,7 +40,7 @@ export default function ContactoSection() {
               <NavLink to="/register" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto bg-primary/50 text-primary hover:bg-primary/10 hover:text-white rounded-2xl px-12 font-black h-16 shadow-[0_15px_30px_-5px_rgba(0,0,0,0.15)] hover:scale-[1.03] transition-all"
+                  className="w-full sm:w-auto bg-primary/50 text-primary hover:bg-primary/10 hover:text-white rounded-lg px-12 font-black h-16 shadow-[0_15px_30px_-5px_rgba(0,0,0,0.15)] hover:scale-[1.03] transition-all"
                 >
                   <CalendarPlus className="w-6 h-6 mr-3" />
                   Agendar Cita Ahora
@@ -49,7 +49,7 @@ export default function ContactoSection() {
               <Button
                 variant="ghost"
                 size="lg"
-                className="w-full sm:w-auto text-white hover:bg-white/10 rounded-2xl px-10 h-16 border-2 border-white/40 backdrop-blur-sm font-bold"
+                className="w-full sm:w-auto text-white hover:bg-white/10 rounded-lg px-10 h-16 border-2 border-white/40 backdrop-blur-sm font-bold"
               >
                 <MessageCircle className="w-5 h-5 mr-3" />
                 WhatsApp

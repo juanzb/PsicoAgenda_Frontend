@@ -34,6 +34,7 @@ export type TSidebarProps = {
   appName?: string;
   children?: ReactNode;
   childrenClassName?: string;
+  currentPath?: string;
 };
 
 export function Sidebar({
@@ -43,6 +44,7 @@ export function Sidebar({
   appName = "PsicoAgenda",
   children,
   childrenClassName,
+  currentPath,
 }: TSidebarProps): ReactNode {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(() => {
@@ -93,10 +95,10 @@ export function Sidebar({
       >
         {/* Header con Logo */}
         <div
-          className={`p-4 border-b border-sidebar-border flex items-center transition-all duration-300 ${effectiveCollapsed ? "justify-center" : "justify-between"}`}
+          className={`h-17.5 px-4 border-b border-sidebar-border flex items-center transition-all duration-300 ${effectiveCollapsed ? "justify-center" : "justify-between"}`}
         >
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="min-w-11 h-11 bg-sidebar-primary rounded-xl flex items-center justify-center shadow-lg shadow-black/20 border border-white/10 shrink-0">
+            <div className="min-w-11 h-11 bg-sidebar-primary rounded-md flex items-center justify-center shadow-lg shadow-black/20 border border-white/10 shrink-0">
               <ShieldCheck className="text-white" size={26} />
             </div>
             <div
@@ -123,7 +125,7 @@ export function Sidebar({
         {/* Botón de Colapso (Desktop) */}
         <button
           onClick={toggleCollapse}
-          className="hidden md:flex absolute -right-3 top-20 w-7 h-7 bg-primary rounded-full items-center justify-center border-4 border-background hover:scale-110 transition-transform z-60 shadow-lg"
+          className="hidden md:flex absolute -right-3 top-6 w-6 h-6 bg-primary rounded-full items-center justify-center border-3 border-background hover:scale-110 transition-transform z-60 shadow-lg"
           title={isCollapsed ? "Expandir" : "Colapsar"}
         >
           {isCollapsed ? (
@@ -155,7 +157,7 @@ export function Sidebar({
             <NavLink
               to={PATHS.USER_PROFILE}
               className={`
-                flex items-center gap-2 p-1.5 rounded-xl bg-sidebar-accent/50 border border-sidebar-border hover:bg-sidebar-accent transition-all group/user overflow-hidden
+                flex items-center gap-2 p-1.5 rounded-md bg-sidebar-accent/50 border border-sidebar-border hover:bg-sidebar-accent transition-all group/user overflow-hidden
                 ${effectiveCollapsed ? "flex-1 justify-center p-1.5" : "flex-4"}
               `}
             >
@@ -193,7 +195,7 @@ export function Sidebar({
             {!effectiveCollapsed && (
               <button
                 onClick={onLogout}
-                className="flex items-center cursor-pointer p-2.5 h-full justify-center text-center text-sidebar-foreground opacity-50 hover:opacity-100 hover:text-destructive hover:bg-destructive/10 rounded-xl transition-all border border-transparent hover:border-destructive/20"
+                className="flex items-center cursor-pointer p-2.5 h-full justify-center text-center text-sidebar-foreground opacity-50 hover:opacity-100 hover:text-destructive hover:bg-destructive/10 rounded-md transition-all border border-transparent hover:border-destructive/20"
                 title="Cerrar sesión"
               >
                 <LogOut size={20} />
@@ -204,7 +206,7 @@ export function Sidebar({
           {effectiveCollapsed && (
             <button
               onClick={onLogout}
-              className="w-full mt-2 flex items-center justify-center p-3 text-sidebar-foreground opacity-50 hover:opacity-100 hover:text-destructive hover:bg-destructive/10 rounded-xl transition-colors relative group/logout"
+              className="w-full mt-2 flex items-center justify-center p-3 text-sidebar-foreground opacity-50 hover:opacity-100 hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors relative group/logout"
             >
               <LogOut size={22} />
               <div className="fixed left-17.5 ml-2 px-3 py-2 bg-destructive text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover/logout:opacity-100 group-hover/logout:visible transition-all whitespace-nowrap z-999 shadow-2xl">
@@ -233,12 +235,12 @@ export function Sidebar({
               <ShieldCheck className="text-white" size={18} />
             </div>
             <span className="font-bold text-foreground text-lg tracking-tight">
-              {appName}
+              {currentPath}
             </span>
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar bg-background">
+        <div className="bg-background flex flex-1 flex-col overflow-hidden">
           {children}
         </div>
       </main>

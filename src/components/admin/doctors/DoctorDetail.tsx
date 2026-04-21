@@ -110,7 +110,7 @@ export function DoctorDetail({
         <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
           {/* Info Rápida */}
           <div className="grid grid-cols-2 gap-2">
-            <div className="p-2.5 rounded-xl bg-muted/30 border border-border/40">
+            <div className="p-2.5 rounded-md bg-muted/30 border border-border/40">
               <p className="text-[8px] font-black text-muted-foreground uppercase mb-1">
                 Especialidad
               </p>
@@ -119,7 +119,7 @@ export function DoctorDetail({
                 {doctor.specialty}
               </div>
             </div>
-            <div className="p-2.5 rounded-xl bg-muted/30 border border-border/40">
+            <div className="p-2.5 rounded-md bg-muted/30 border border-border/40">
               <p className="text-[8px] font-black text-muted-foreground uppercase mb-1">
                 Experiencia
               </p>
@@ -131,7 +131,7 @@ export function DoctorDetail({
           </div>
 
           {/* TABS SELECTOR */}
-          <div className="flex p-1 bg-muted/30 rounded-xl border border-border/40">
+          <div className="flex p-1 bg-muted/30 rounded-md border border-border/40">
             <button
               onClick={() => setActiveTab("schedule")}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${
@@ -167,7 +167,7 @@ export function DoctorDetail({
                 {availableSchedules.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between p-3 bg-white border border-border/40 rounded-xl hover:border-primary/20 transition-all"
+                    className="flex items-center justify-between p-3 bg-white border border-border/40 rounded-md hover:border-primary/20 transition-all"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center border border-emerald-100">
@@ -204,7 +204,7 @@ export function DoctorDetail({
                 </div>
 
                 {/* Filtro de historial dentro del tab */}
-                <div className="flex items-end gap-2 bg-muted/30 p-2.5 rounded-xl border border-border/40 mb-2">
+                <div className="flex items-end gap-2 bg-muted/30 p-2.5 rounded-md border border-border/40 mb-2">
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center gap-2 bg-white px-2.5 py-1.5 rounded-lg border border-border/60">
                       <input
@@ -232,7 +232,7 @@ export function DoctorDetail({
                 {appointmentHistory.map((appt, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-4 p-3 bg-white border border-border/40 rounded-xl hover:border-primary/20 transition-all"
+                    className="flex items-center gap-4 p-3 bg-white border border-border/40 rounded-md hover:border-primary/20 transition-all"
                   >
                     <div className="w-9 h-9 rounded-lg bg-primary/5 flex flex-col items-center justify-center shrink-0 border border-primary/5">
                       <span className="text-[8px] font-black text-primary uppercase">
@@ -266,7 +266,7 @@ export function DoctorDetail({
           </div>
 
           {/* PERFIL PROFESIONAL */}
-          <div className="p-4 rounded-2xl bg-primary/1 border border-dashed border-primary/20">
+          <div className="p-4 rounded-lg bg-primary/1 border border-dashed border-primary/20">
             <h4 className="text-[9px] font-black text-primary uppercase tracking-widest mb-2">
               Perfil Profesional
             </h4>
@@ -283,13 +283,13 @@ export function DoctorDetail({
           <Button
             variant="outline"
             size="sm"
-            className="rounded-xl font-bold h-10 border-border/60"
+            className="rounded-md font-bold h-10 border-border/60"
           >
             <Edit size={14} className="mr-2" /> Editar
           </Button>
           <Button
             size="sm"
-            className="rounded-xl font-bold h-10 gradient-primary shadow-md"
+            className="rounded-md font-bold h-10 gradient-primary shadow-md"
           >
             <MessageSquare size={14} className="mr-2" /> Mensaje
           </Button>

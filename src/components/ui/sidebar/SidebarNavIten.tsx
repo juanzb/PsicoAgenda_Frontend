@@ -34,50 +34,67 @@ export function SidebarNavItem({
 
   const hasSubRoutes = visibleSubRoutes.length > 0;
 
+  // Verifica si alguna subruta (explícita o anidada en la URL) está activa
   const isAnySubRouteActive = useMemo(() => {
     const checkActive = (routes: TSidebarItem[]): boolean => {
-      return routes.some(
-        (r) =>
-          (r.path && location.pathname === r.path) ||
-          (r.subRoutes && checkActive(r.subRoutes)),
-      );
+      return routes.some((r) => {
+        if (!r.path) return false;
+        if (r.path === "/") return location.pathname === "/";
+
+        const isActive = location.pathname.startsWith(r.path);
+        if (isActive) return true;
+
+        if (r.subRoutes) return checkActive(r.subRoutes);
+        return false;
+      });
     };
     return hasSubRoutes && checkActive(visibleSubRoutes);
   }, [visibleSubRoutes, location.pathname, hasSubRoutes]);
 
+  // Verifica si el item actual (él mismo) está activo basado en la URL
+  const isSelfActive = useMemo(() => {
+    if (!item.path) return false;
+    if (item.path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(item.path);
+  }, [item.path, location.pathname]);
+
   useEffect(() => {
-    if (isAnySubRouteActive && !isCollapsed) {
-      setIsOpen(() => true);
+    if ((isAnySubRouteActive || isSelfActive) && !isCollapsed) {
+      setIsOpen(true);
     }
-  }, [isAnySubRouteActive, isCollapsed]);
+  }, [isAnySubRouteActive, isSelfActive, isCollapsed]);
 
   const handleClick = () => {
     if (isCollapsed && hasSubRoutes) {
       expandSidebar();
-      setIsOpen(() => true);
+      setIsOpen(true);
       return;
     }
     if (hasSubRoutes) {
-      setIsOpen(() => !isOpen);
+      setIsOpen((prev) => !prev);
     } else if (item.path && closeMobile) {
       closeMobile();
     }
   };
 
-  const activeClass = "bg-sidebar-accent text-sidebar-primary shadow-sm";
+  // Clases de estado dinámicas
+  const activeClass =
+    "bg-sidebar-accent text-sidebar-primary shadow-sm border border-sidebar-border/30";
+  const openClass =
+    "bg-sidebar-accent/30 text-sidebar-foreground opacity-100 border border-transparent";
   const inactiveClass =
-    "text-sidebar-foreground opacity-70 hover:opacity-100 hover:bg-sidebar-accent hover:text-sidebar-foreground";
+    "text-sidebar-foreground opacity-70 hover:opacity-100 hover:bg-sidebar-accent hover:text-sidebar-foreground border border-transparent";
 
   return (
     <div className="relative group/item w-full px-2 text-[14px]">
-      {/* Botón Principal / Link */}
+      {/* Botón Principal / Link (Items sin subrutas) */}
       {!hasSubRoutes ? (
         <NavLink
           to={item.path}
           onClick={closeMobile}
-          className={({ isActive: linkActive }) => `
-            flex items-center gap-3 p-2 rounded-xl transition-all duration-200 mb-1
-            ${linkActive ? activeClass : inactiveClass}
+          className={() => `
+            flex items-center gap-3 p-2 transition-all duration-200 mb-1
+            ${isSelfActive ? activeClass : inactiveClass}
             ${isCollapsed ? "justify-center" : ""}
           `}
         >
@@ -92,7 +109,6 @@ export function SidebarNavItem({
             </span>
           )}
 
-          {/* Tooltip simple */}
           {isCollapsed && (
             <div className="fixed left-17.5 ml-2 px-3 py-2 bg-sidebar text-sidebar-foreground text-xs font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap z-999 border border-sidebar-border shadow-2xl pointer-events-none">
               {item.name}
@@ -101,11 +117,12 @@ export function SidebarNavItem({
           )}
         </NavLink>
       ) : (
+        /* Botón de Categoría (Items con subrutas) */
         <button
           onClick={handleClick}
           className={`
-            w-full flex items-center gap-3 p-2 rounded-xl transition-all duration-200 mb-1
-            ${(isOpen || isAnySubRouteActive) && !isCollapsed ? "text-sidebar-primary bg-sidebar-accent" : inactiveClass}
+            w-full flex items-center gap-3 p-2 transition-all duration-200 mb-1
+            ${isAnySubRouteActive ? activeClass : isOpen && !isCollapsed ? openClass : inactiveClass}
             ${isCollapsed ? "justify-center" : ""}
           `}
         >
@@ -126,7 +143,6 @@ export function SidebarNavItem({
             </>
           )}
 
-          {/* Tooltip para items con subrutas */}
           {isCollapsed && (
             <div className="fixed left-17.5 ml-2 px-3 py-2 bg-sidebar-primary text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all whitespace-nowrap z-999 shadow-2xl pointer-events-none">
               {item.name}

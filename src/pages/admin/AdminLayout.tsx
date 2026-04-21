@@ -15,7 +15,10 @@ import {
 import { Outlet, useNavigate, useLocation } from "react-router";
 import { PATHS } from "../../app/router/paths";
 import { ActionModal } from "../../components/ui/action-modal/ActionModal";
-import { ActiveSessionDrawer, type ISessionData } from "../../components/admin/sessions/ActiveSessionDrawer";
+import {
+  ActiveSessionDrawer,
+  type ISessionData,
+} from "../../components/admin/sessions/ActiveSessionDrawer";
 
 // Mock de usuario actual (esto vendría de un AuthContext)
 const MOCK_USER: IUser & { id: string; canViewAllCalendar?: boolean } = {
@@ -30,7 +33,7 @@ const MOCK_USER: IUser & { id: string; canViewAllCalendar?: boolean } = {
 export function AdminLayout(): ReactNode {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  
+
   // ESTADO DE SESIÓN ACTIVA (MULTITASKING)
   const [activeSession, setActiveSession] = useState<ISessionData | null>(null);
   const [isSessionDrawerOpen, setIsSessionDrawerOpen] = useState(false);
@@ -46,7 +49,7 @@ export function AdminLayout(): ReactNode {
       patientName,
       notes: "",
       tasks: [],
-      status: "idle"
+      status: "idle",
     });
     setIsSessionDrawerOpen(true);
     setIsSessionMinimized(false);
@@ -198,38 +201,43 @@ export function AdminLayout(): ReactNode {
         dataUser={MOCK_USER}
         onLogout={() => setIsLogoutModalOpen(true)}
         childrenClassName="bg-background w-full h-full flex flex-col overflow-hidden"
+        currentPath={currentRouteName}
       >
-        {/* HEADER DINÁMICO FIJO - Solo visible en Desktop */}
-        <header className="hidden md:block sticky top-0 z-30 w-full p-4 bg-white/80 backdrop-blur-md border-b border-border/50 shadow-sm transition-all duration-300">
-          <div className="flex md:flex-row md:items-center justify-between gap-4">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-3">
-                <div className="w-1.5 h-6 bg-primary rounded-full shadow-[0_0_10px_rgba(20,136,116,0.3)]" />
-                <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">
-                  {currentRouteName}
-                </h2>
+        <main className="flex flex-1 flex-col overflow-hidden">
+          {/* HEADER DINÁMICO FIJO - Solo visible en Desktop */}
+          <header className="hidden md:flex sticky top-0 z-30 w-full h-17.5 px-4 bg-white/80 backdrop-blur-md border-b border-border/50 shadow-sm transition-all duration-300 ">
+            <div className="flex w-full md:flex-row md:items-center justify-between gap-4">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-1.5 h-6 bg-primary rounded-full shadow-[0_0_10px_rgba(20,136,116,0.3)]" />
+                  <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">
+                    {currentRouteName}
+                  </h2>
+                </div>
+              </div>
+
+              {/* Fecha Actual */}
+              <div className="hidden sm:flex items-center gap-3">
+                <div className="px-3 py-1.5 bg-muted/50 border border-border/40 rounded-md text-[10px] font-black text-primary uppercase tracking-widest">
+                  {new Date().toLocaleDateString("es-ES", {
+                    weekday: "short",
+                    day: "numeric",
+                    month: "long",
+                  })}
+                </div>
               </div>
             </div>
+          </header>
 
-            {/* Fecha Actual */}
-            <div className="hidden sm:flex items-center gap-3">
-              <div className="px-3 py-1.5 bg-muted/50 border border-border/40 rounded-xl text-[10px] font-black text-primary uppercase tracking-widest">
-                {new Date().toLocaleDateString("es-ES", {
-                  weekday: "short",
-                  day: "numeric",
-                  month: "long",
-                })}
+          {/* ÁREA DE CONTENIDO - Flex container para permitir scroll interno en las vistas */}
+          <div className="flex-1 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-2 md:p-3 lg:p-3">
+              <div className="h-full w-full">
+                <Outlet context={{ handleStartSession }} />
               </div>
             </div>
           </div>
-        </header>
-
-        {/* ÁREA DE CONTENIDO - Flex container para permitir scroll interno en las vistas */}
-        <div className="flex-1 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-500">
-          <div className="flex flex-1 overflow-hidden p-2 md:p-3 lg:p-3 flex-col">
-            <Outlet context={{ handleStartSession }} />
-          </div>
-        </div>
+        </main>
       </Sidebar>
 
       {/* DRAWER DE SESIÓN ACTIVA (MULTITASKING) */}
@@ -247,7 +255,9 @@ export function AdminLayout(): ReactNode {
             }
           }}
           onMinimize={setIsSessionMinimized}
-          onUpdateSession={(data) => setActiveSession(prev => prev ? ({ ...prev, ...data }) : null)}
+          onUpdateSession={(data) =>
+            setActiveSession((prev) => (prev ? { ...prev, ...data } : null))
+          }
           onFinish={handleFinishSession}
         />
       )}

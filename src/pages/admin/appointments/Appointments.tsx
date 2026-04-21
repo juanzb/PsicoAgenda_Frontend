@@ -183,7 +183,7 @@ export function AppointmentsPage(): ReactNode {
               />
               <input
                 placeholder="Buscar por nombre..."
-                className="w-full pl-10 pr-4 py-2 bg-white border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="w-full pl-10 pr-4 py-2 bg-white border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
             </div>
           </div>
@@ -201,7 +201,7 @@ export function AppointmentsPage(): ReactNode {
               >
                 <CardContent className="p-6">
                   <div className="flex gap-4">
-                    <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 border-2 border-white shadow-sm">
+                    <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border-2 border-white shadow-sm">
                       <img
                         src={doc.avatarUrl}
                         alt={doc.name}
@@ -235,7 +235,7 @@ export function AppointmentsPage(): ReactNode {
           <div className="flex justify-end pt-4">
             <Button
               size="lg"
-              className="rounded-2xl px-10 gradient-primary"
+              className="rounded-lg px-10 gradient-primary"
               disabled={!selectedSpecialist}
               onClick={() => setStep("schedule")}
               icon={<ArrowRight size={20} />}
@@ -267,7 +267,7 @@ export function AppointmentsPage(): ReactNode {
             </p>
           </div>
 
-          <Card className="border-none shadow-elevated rounded-3xl">
+          <Card className="border-none shadow-elevated rounded-lg">
             <CardContent className="p-8 space-y-8">
               {/* Selector de Fecha */}
               <div className="space-y-4">
@@ -279,7 +279,7 @@ export function AppointmentsPage(): ReactNode {
                     <button
                       key={d.full}
                       onClick={() => setSelectedDate(d.full)}
-                      className={`flex flex-col items-center min-w-16 p-3 rounded-2xl border-2 transition-all cursor-pointer ${
+                      className={`flex flex-col items-center min-w-16 p-3 rounded-lg border-2 transition-all cursor-pointer ${
                         selectedDate === d.full
                           ? "bg-primary border-primary text-white shadow-lg shadow-primary/20"
                           : "border-border hover:border-primary/40 bg-muted/30"
@@ -309,7 +309,7 @@ export function AppointmentsPage(): ReactNode {
                     <button
                       key={time}
                       onClick={() => setSelectedTime(time)}
-                      className={`py-3 px-4 rounded-xl border-2 font-bold text-sm transition-all cursor-pointer ${
+                      className={`py-3 px-4 rounded-md border-2 font-bold text-sm transition-all cursor-pointer ${
                         selectedTime === time
                           ? "bg-primary border-primary text-white"
                           : "border-border hover:border-primary/40"
@@ -326,7 +326,7 @@ export function AppointmentsPage(): ReactNode {
           <div className="flex justify-end pt-4">
             <Button
               size="lg"
-              className="rounded-2xl px-10 gradient-primary"
+              className="rounded-lg px-10 gradient-primary"
               disabled={!selectedDate || !selectedTime}
               onClick={() => setStep("summary")}
               icon={<ArrowRight size={20} />}
@@ -358,9 +358,9 @@ export function AppointmentsPage(): ReactNode {
             </p>
           </div>
 
-          <Card className="border-none shadow-elevated rounded-3xl overflow-hidden">
+          <Card className="border-none shadow-elevated rounded-lg overflow-hidden">
             <div className="gradient-primary p-6 text-white flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+              <div className="w-16 h-16 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center">
                 <ShieldCheck size={32} />
               </div>
               <div>
@@ -373,7 +373,7 @@ export function AppointmentsPage(): ReactNode {
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-6">
                   <div className="flex gap-4 items-center">
-                    <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-md bg-muted flex items-center justify-center shrink-0">
                       <User className="text-primary" size={24} />
                     </div>
                     <div>
@@ -390,7 +390,7 @@ export function AppointmentsPage(): ReactNode {
                   </div>
 
                   <div className="flex gap-4 items-center">
-                    <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-md bg-muted flex items-center justify-center shrink-0">
                       <Calendar className="text-primary" size={24} />
                     </div>
                     <div>
@@ -407,7 +407,7 @@ export function AppointmentsPage(): ReactNode {
                   </div>
                 </div>
 
-                <div className="bg-muted/30 rounded-2xl p-6 border border-dashed border-border flex flex-col justify-center gap-3">
+                <div className="bg-muted/30 rounded-lg p-6 border border-dashed border-border flex flex-col justify-center gap-3">
                   <div className="flex items-center gap-2 text-primary">
                     <Info size={18} />
                     <span className="text-sm font-bold">
@@ -425,7 +425,7 @@ export function AppointmentsPage(): ReactNode {
             <CardFooter className="p-8 pt-0">
               <Button
                 size="lg"
-                className="w-full rounded-2xl h-14 text-lg font-bold gradient-primary shadow-xl shadow-primary/20"
+                className="w-full rounded-lg h-14 text-lg font-bold gradient-primary shadow-xl shadow-primary/20"
                 onClick={handleConfirm}
                 isLoading={isBooking}
               >
@@ -458,12 +458,12 @@ export function AppointmentsPage(): ReactNode {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="rounded-2xl px-10"
+              className="rounded-lg px-10"
               onClick={handleReset}
             >
               Agendar otra cita
             </Button>
-            <Button variant="outline" size="lg" className="rounded-2xl px-10">
+            <Button variant="outline" size="lg" className="rounded-lg px-10">
               Ir a mis citas
             </Button>
           </div>

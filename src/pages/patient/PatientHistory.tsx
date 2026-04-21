@@ -31,7 +31,7 @@ export function PatientHistoryPage(): ReactNode {
     <div className="h-full overflow-y-auto custom-scrollbar p-6 space-y-8 pb-20">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shadow-sm">
+          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary shadow-sm">
             <BookOpen size={24} />
           </div>
           <div>
@@ -44,13 +44,13 @@ export function PatientHistoryPage(): ReactNode {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
           <input 
             placeholder="Buscar por fecha..."
-            className="pl-10 pr-4 py-2 bg-white border border-border/40 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-primary/20 w-full md:w-64"
+            className="pl-10 pr-4 py-2 bg-white border border-border/40 rounded-md text-xs font-bold outline-none focus:ring-2 focus:ring-primary/20 w-full md:w-64"
           />
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto">
-        <div className="bg-primary/5 p-4 rounded-2xl border border-primary/10 mb-10 flex items-center gap-3">
+        <div className="bg-primary/5 p-4 rounded-lg border border-primary/10 mb-10 flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <p className="text-[10px] font-black text-primary uppercase tracking-widest">Las notas detalladas del doctor son para uso clínico profesional y no se muestran aquí.</p>
         </div>

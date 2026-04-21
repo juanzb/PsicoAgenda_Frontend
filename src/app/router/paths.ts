@@ -7,7 +7,7 @@ export const PATHS = {
     DASHBOARD: "/admin/dashboard",
     DOCTORS: "/admin/doctors",
     PATIENTS: "/admin/patients",
-    PATIENT_HISTORY: "/admin/patients/:id/history",
+    PATIENT_DATA: "/admin/patients/:id/data",
     APPOINTMENTS: "/admin/appointments",
     CALENDAR: "/admin/calendar",
   },

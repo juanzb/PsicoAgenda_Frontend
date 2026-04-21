@@ -51,7 +51,7 @@ export function CardDoctors({
         {/* Identificador con Inicial */}
         <div className="flex items-center gap-4 flex-1 min-w-0 w-full">
           <div className="relative shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/10">
+            <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center border border-primary/10">
               <span className="text-sm font-black text-primary">{initial}</span>
             </div>
             <div
@@ -97,7 +97,7 @@ export function CardDoctors({
           <Button
             variant={isSelected ? "primary" : "ghost"}
             size="sm"
-            className="rounded-xl font-bold h-9 px-4 group/btn"
+            className="rounded-md font-bold h-9 px-4 group/btn"
             onClick={(e) => {
               e.stopPropagation();
               onOpenDetail(doctor);

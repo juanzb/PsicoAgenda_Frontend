@@ -39,7 +39,7 @@ export function LoginPage(): ReactNode {
       <div className="w-full max-w-md animate-fade-in relative z-10">
         <div className="text-center mb-8">
           <NavLink to="/" className="inline-flex items-center gap-2 group">
-            <div className="w-12 h-12 rounded-2xl gradient-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 rounded-lg gradient-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
               <Brain className="w-7 h-7 text-white" />
             </div>
             <span className="text-3xl font-bold text-foreground">
@@ -48,7 +48,7 @@ export function LoginPage(): ReactNode {
           </NavLink>
         </div>
 
-        <Card className="border-none shadow-elevated overflow-hidden rounded-3xl">
+        <Card className="border-none shadow-elevated overflow-hidden rounded-lg">
           <CardHeader className="pt-8 pb-4 text-center">
             <CardTitle className="text-2xl font-bold">
               Bienvenido de nuevo
@@ -72,7 +72,7 @@ export function LoginPage(): ReactNode {
                     type="email"
                     required
                     placeholder="ejemplo@correo.com"
-                    className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                    className="w-full pl-11 pr-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                   />
                 </div>
               </div>
@@ -97,7 +97,7 @@ export function LoginPage(): ReactNode {
                     type={showPassword ? "text" : "password"}
                     required
                     placeholder="••••••••"
-                    className="w-full pl-11 pr-12 py-3 bg-muted/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                    className="w-full pl-11 pr-12 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                   />
                   <button
                     type="button"
@@ -111,7 +111,7 @@ export function LoginPage(): ReactNode {
 
               <Button
                 type="submit"
-                className="w-full rounded-2xl h-12 text-base font-bold gradient-primary shadow-lg shadow-primary/20 mt-2"
+                className="w-full rounded-lg h-12 text-base font-bold gradient-primary shadow-lg shadow-primary/20 mt-2"
                 isLoading={isLoading}
               >
                 Iniciar Sesión
@@ -132,7 +132,7 @@ export function LoginPage(): ReactNode {
             <NavLink to={PATHS.REGISTER} className="w-full">
               <Button
                 variant="outline"
-                className="w-full rounded-2xl h-12 font-bold border-2 border-primary/20 hover:border-primary/50"
+                className="w-full rounded-lg h-12 font-bold border-2 border-primary/20 hover:border-primary/50"
               >
                 Crear una cuenta nueva
               </Button>

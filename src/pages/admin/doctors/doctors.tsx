@@ -94,7 +94,7 @@ export function DoctorsPage(): ReactNode {
     <div className="h-full w-full max-w-400 mx-auto grid grid-rows-[auto_1fr_auto] overflow-hidden relative">
       {/* 1. SECCIÓN SUPERIOR: FILTROS */}
       <div className="pb-3 shrink-0">
-        <div className="flex flex-col md:flex-row gap-2 items-stretch md:items-center bg-white p-2 rounded-xl border border-border/40 shadow-sm">
+        <div className="flex flex-col md:flex-row gap-2 items-stretch md:items-center bg-white p-2 rounded-md border border-border/40 shadow-sm">
           <div className="flex gap-2 flex-1">
             <Button
               size="sm"
@@ -142,7 +142,7 @@ export function DoctorsPage(): ReactNode {
             ))}
           </div>
         ) : (
-          <div className="h-full flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-border/60">
+          <div className="h-full flex flex-col items-center justify-center bg-white rounded-lg border border-dashed border-border/60">
             <Search size={24} className="text-muted-foreground/20 mb-3" />
             <h3 className="text-xs font-black text-muted-foreground uppercase tracking-widest">
               Sin resultados
@@ -153,7 +153,7 @@ export function DoctorsPage(): ReactNode {
 
       {/* 3. SECCIÓN INFERIOR: PAGINACIÓN */}
       <div className="pt-3 shrink-0">
-        <div className="bg-white p-1 rounded-xl border border-border/40 shadow-sm">
+        <div className="bg-white p-1 rounded-md border border-border/40 shadow-sm">
           <Pagination
             currentPage={currentPage}
             totalItems={filteredDoctors.length}

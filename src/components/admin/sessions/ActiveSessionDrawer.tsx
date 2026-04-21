@@ -79,10 +79,10 @@ export function ActiveSessionDrawer({
   if (isMinimized) {
     return (
       <div 
-        className="fixed bottom-6 right-6 z-[60] bg-primary text-white p-4 rounded-2xl shadow-2xl flex items-center gap-4 cursor-pointer hover:scale-105 transition-all animate-in zoom-in-90"
+        className="fixed bottom-6 right-6 z-[60] bg-primary text-white p-4 rounded-lg shadow-2xl flex items-center gap-4 cursor-pointer hover:scale-105 transition-all animate-in zoom-in-90"
         onClick={() => onMinimize(false)}
       >
-        <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center animate-pulse">
+        <div className="w-10 h-10 rounded-md bg-white/20 flex items-center justify-center animate-pulse">
           <Clock size={20} />
         </div>
         <div>
@@ -107,7 +107,7 @@ export function ActiveSessionDrawer({
         {/* Header */}
         <div className="p-6 border-b border-border/40 flex items-center justify-between bg-primary/5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+            <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
               <Clock size={24} className={session.status === 'active' ? 'animate-spin-slow' : ''} />
             </div>
             <div>
@@ -121,10 +121,10 @@ export function ActiveSessionDrawer({
             </div>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => onMinimize(true)} className="p-2 text-muted-foreground hover:bg-muted rounded-xl transition-all">
+            <button onClick={() => onMinimize(true)} className="p-2 text-muted-foreground hover:bg-muted rounded-md transition-all">
               <Minimize2 size={20} />
             </button>
-            <button onClick={onClose} className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/5 rounded-xl transition-all">
+            <button onClick={onClose} className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/5 rounded-md transition-all">
               <X size={20} />
             </button>
           </div>
@@ -133,7 +133,7 @@ export function ActiveSessionDrawer({
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
           {/* Cronómetro Visual */}
-          <div className="bg-muted/30 rounded-3xl p-8 text-center border border-border/40 relative overflow-hidden group">
+          <div className="bg-muted/30 rounded-lg p-8 text-center border border-border/40 relative overflow-hidden group">
             <div className="relative z-10">
               <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-2">Tiempo Transcurrido</p>
               <h3 className="text-5xl font-black text-foreground tabular-nums tracking-tight">
@@ -150,7 +150,7 @@ export function ActiveSessionDrawer({
             {session.status === "idle" ? (
               <Button 
                 onClick={() => onUpdateSession({ status: "active", startTime: new Date() })}
-                className="w-full h-14 rounded-2xl text-lg font-bold gradient-primary shadow-lg shadow-primary/20"
+                className="w-full h-14 rounded-lg text-lg font-bold gradient-primary shadow-lg shadow-primary/20"
                 icon={<Play size={24} />}
               >
                 Iniciar Sesión Ahora
@@ -159,7 +159,7 @@ export function ActiveSessionDrawer({
               <Button 
                 variant="destructive"
                 onClick={onFinish}
-                className="w-full h-14 rounded-2xl text-lg font-bold shadow-lg shadow-destructive/10"
+                className="w-full h-14 rounded-lg text-lg font-bold shadow-lg shadow-destructive/10"
                 icon={<Square size={20} />}
               >
                 Finalizar Sesión
@@ -176,7 +176,7 @@ export function ActiveSessionDrawer({
               value={session.notes}
               onChange={(e) => onUpdateSession({ notes: e.target.value })}
               placeholder="Registra los avances, observaciones y puntos clave de la sesión..."
-              className="w-full h-48 bg-muted/20 border-border/40 rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-primary/10 focus:bg-white transition-all resize-none outline-none"
+              className="w-full h-48 bg-muted/20 border-border/40 rounded-lg p-4 text-sm font-medium focus:ring-2 focus:ring-primary/10 focus:bg-white transition-all resize-none outline-none"
             />
           </div>
 
@@ -193,16 +193,16 @@ export function ActiveSessionDrawer({
                 onChange={(e) => setNewTask(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addTask()}
                 placeholder="Ej. Ejercicio de respiración..."
-                className="flex-1 bg-muted/20 border-border/40 rounded-xl px-4 py-3 text-xs font-bold outline-none focus:bg-white transition-all"
+                className="flex-1 bg-muted/20 border-border/40 rounded-md px-4 py-3 text-xs font-bold outline-none focus:bg-white transition-all"
               />
-              <Button onClick={addTask} className="rounded-xl w-12 h-12 gradient-primary">
+              <Button onClick={addTask} className="rounded-md w-12 h-12 gradient-primary">
                 <Plus size={20} />
               </Button>
             </div>
 
             <div className="space-y-2">
               {session.tasks.map((task, i) => (
-                <div key={i} className="flex items-center justify-between p-3 bg-muted/30 border border-border/40 rounded-xl group animate-in slide-in-from-left-2">
+                <div key={i} className="flex items-center justify-between p-3 bg-muted/30 border border-border/40 rounded-md group animate-in slide-in-from-left-2">
                   <span className="text-xs font-bold text-foreground flex items-center gap-2">
                     <ChevronRight size={14} className="text-primary" /> {task}
                   </span>

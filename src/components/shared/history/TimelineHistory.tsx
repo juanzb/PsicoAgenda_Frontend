@@ -40,7 +40,7 @@ export function TimelineHistory({
           </div>
 
           {/* Card Content */}
-          <div className="w-[calc(100%-4rem)] md:w-[45%] bg-white p-6 rounded-3xl border border-border/40 shadow-sm transition-all hover:shadow-xl hover:border-primary/20 relative">
+          <div className="w-[calc(100%-4rem)] md:w-[45%] bg-white p-6 rounded-lg border border-border/40 shadow-sm transition-all hover:shadow-xl hover:border-primary/20 relative">
             <div className="flex items-center justify-between mb-4">
               <div className="flex flex-col">
                  <time className="text-xs font-black text-primary uppercase tracking-widest">{item.date}</time>
@@ -65,7 +65,7 @@ export function TimelineHistory({
 
               {/* Notas (Solo si showPrivateNotes es true) */}
               {showPrivateNotes && item.notes && (
-                <div className="p-4 bg-muted/20 rounded-2xl border border-dashed border-border/60">
+                <div className="p-4 bg-muted/20 rounded-lg border border-dashed border-border/60">
                   <div className="flex items-center gap-2 mb-2">
                     <FileText size={12} className="text-primary" />
                     <span className="text-[10px] font-black uppercase text-primary/70 tracking-widest">Notas Clínicas</span>
@@ -85,7 +85,7 @@ export function TimelineHistory({
                   </div>
                   <div className="space-y-1.5">
                     {item.tasks.map((task, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs font-bold text-muted-foreground bg-primary/2 p-2 rounded-xl border border-primary/10">
+                      <div key={i} className="flex items-center gap-2 text-xs font-bold text-muted-foreground bg-primary/2 p-2 rounded-md border border-primary/10">
                         <ChevronRight size={14} className="text-primary/40" />
                         {task}
                       </div>
@@ -95,7 +95,7 @@ export function TimelineHistory({
               )}
 
               {item.status === 'cancelled' && (
-                <div className="flex items-center gap-2 text-destructive/70 bg-destructive/5 p-3 rounded-xl border border-destructive/10">
+                <div className="flex items-center gap-2 text-destructive/70 bg-destructive/5 p-3 rounded-md border border-destructive/10">
                   <AlertCircle size={14} />
                   <p className="text-[10px] font-bold uppercase tracking-wider">Cita cancelada por el paciente</p>
                 </div>
@@ -103,7 +103,7 @@ export function TimelineHistory({
             </div>
 
             {/* Acciones (Opcional) */}
-            <button className="absolute top-4 right-4 p-2 text-muted-foreground/30 hover:text-foreground hover:bg-muted rounded-xl transition-all opacity-0 group-hover:opacity-100">
+            <button className="absolute top-4 right-4 p-2 text-muted-foreground/30 hover:text-foreground hover:bg-muted rounded-md transition-all opacity-0 group-hover:opacity-100">
               <MoreVertical size={16} />
             </button>
           </div>
