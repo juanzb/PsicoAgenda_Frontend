@@ -112,7 +112,7 @@ export function CardDoctors({
             <FileText size={14} className="mr-2" />
             Data
           </Button>
-          
+
           <Button
             variant={isSelected ? "primary" : "ghost"}
             size="sm"

@@ -14,9 +14,11 @@ import { PatientTasksPage } from "../../pages/patient/PatientTasks";
 import { NotFoundPage } from "../../pages/not-found/NotFount";
 import { RegistrePage } from "../../pages/register/Register";
 import { AdminLayout } from "../../pages/admin/AdminLayout";
+import { RoleGuard } from "../../components/shared/RoleGuard";
 import { PATHS } from "./paths";
 
 export const routesApp = createBrowserRouter([
+  // RUTAS PÚBLICAS (Accesibles por todos)
   {
     path: PATHS.HOME,
     Component: HomePage,
@@ -29,9 +31,15 @@ export const routesApp = createBrowserRouter([
     path: PATHS.REGISTER,
     Component: RegistrePage,
   },
+
+  // PORTAL ADMINISTRADOR (Protegido: Solo ADMIN)
   {
     path: PATHS.ADMIN.ROOT,
-    Component: AdminLayout,
+    element: (
+      <RoleGuard allowedRoles={["ADMIN"]}>
+        <AdminLayout />
+      </RoleGuard>
+    ),
     children: [
       {
         index: true,
@@ -64,9 +72,52 @@ export const routesApp = createBrowserRouter([
       },
     ],
   },
+
+  // PORTAL DOCTOR (Protegido: Solo DOCTOR)
+  {
+    path: PATHS.DOCTOR.ROOT,
+    element: (
+      <RoleGuard allowedRoles={["DOCTOR"]}>
+        <AdminLayout />
+      </RoleGuard>
+    ),
+    children: [
+      {
+        index: true,
+        path: PATHS.DOCTOR.DASHBOARD,
+        Component: DashboardPage,
+      },
+      {
+        path: PATHS.DOCTOR.MY_CALENDAR,
+        Component: CalendarPage,
+      },
+      {
+        path: PATHS.DOCTOR.MY_PATIENTS,
+        Component: PatientsPage,
+      },
+      {
+        path: PATHS.DOCTOR.PATIENT_DETAIL,
+        Component: PatientDataPage,
+      },
+      {
+        path: PATHS.DOCTOR.APPOINTMENTS,
+        Component: AppointmentsPage,
+      },
+      {
+        path: PATHS.DOCTOR.MY_PROFILE,
+        Component: DoctorDataPage,
+      },
+    ],
+  },
+
+  // PORTAL PACIENTE (Protegido: Solo PACIENTE)
   {
     path: PATHS.PATIENT.ROOT,
-    Component: AdminLayout,
+    element: (
+      <RoleGuard allowedRoles={["PACIENTE"]}>
+        <AdminLayout />
+      </RoleGuard>
+    ),
     children: [
       {
         index: true,
@@ -87,6 +138,8 @@ export const routesApp = createBrowserRouter([
       },
     ],
   },
+
+  // 404
   {
     path: "*",
     Component: NotFoundPage,

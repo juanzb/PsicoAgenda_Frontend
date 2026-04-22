@@ -1,11 +1,4 @@
-import {
-  X,
-  Clock,
-  History,
-  BookOpen,
-  Play,
-  FileText,
-} from "lucide-react";
+import { X, Clock, History, BookOpen, Play, FileText } from "lucide-react";
 import type { ReactNode } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import { type IPatient } from "./CardPatients";
@@ -22,7 +15,9 @@ export function PatientDetail({
   onClose,
 }: PatientDetailProps): ReactNode {
   const navigate = useNavigate();
-  const { handleStartSession } = useOutletContext<{ handleStartSession: (id: string, name: string) => void }>();
+  const { handleStartSession } = useOutletContext<{
+    handleStartSession: (id: string, name: string) => void;
+  }>();
   const initial = patient.name.charAt(0).toUpperCase();
 
   const handleViewHistory = () => {
@@ -82,7 +77,9 @@ export function PatientDetail({
                 {patient.name}
               </h2>
               <div className="flex items-center gap-2 mt-1.5">
-                <div className={`w-2 h-2 rounded-full ${statusColors[patient.status]}`} />
+                <div
+                  className={`w-2 h-2 rounded-full ${statusColors[patient.status]}`}
+                />
                 <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   {statusLabels[patient.status]}
                 </span>
@@ -99,14 +96,16 @@ export function PatientDetail({
 
         {/* CONTENIDO SIMPLE */}
         <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-          
           {/* ÚLTIMAS CITAS */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h4 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.15em] flex items-center gap-2">
-                    <History size={14} className="text-primary" /> Actividad Reciente
-                </h4>
-                <span className="text-[9px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded-full">Últimas 3</span>
+              <h4 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.15em] flex items-center gap-2">
+                <History size={14} className="text-primary" /> Actividad
+                Reciente
+              </h4>
+              <span className="text-[9px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded-full">
+                Últimas 3
+              </span>
             </div>
 
             <div className="space-y-2">
@@ -144,15 +143,21 @@ export function PatientDetail({
           {/* NOVEDADES / ÚLTIMA NOTA */}
           <div className="p-5 rounded-lg bg-primary/5 border border-dashed border-primary/20 relative overflow-hidden group">
             <div className="relative z-10">
-                <h4 className="text-[9px] font-black text-primary uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <FileText size={14} /> Nota Clínica Destacada
-                </h4>
-                <p className="text-xs text-foreground font-medium leading-relaxed italic">
-                "Paciente muestra avances significativos en el control de impulsos. Se mantiene la estrategia de refuerzo positivo."
-                </p>
-                <p className="text-[9px] font-bold text-muted-foreground/60 mt-4 uppercase">Escrita por Dr. Camilo Sánchez • 12 Abr</p>
+              <h4 className="text-[9px] font-black text-primary uppercase tracking-widest mb-3 flex items-center gap-2">
+                <FileText size={14} /> Nota Clínica Destacada
+              </h4>
+              <p className="text-xs text-foreground font-medium leading-relaxed italic">
+                "Paciente muestra avances significativos en el control de
+                impulsos. Se mantiene la estrategia de refuerzo positivo."
+              </p>
+              <p className="text-[9px] font-bold text-muted-foreground/60 mt-4 uppercase">
+                Escrita por Dr. Camilo Sánchez • 12 Abr
+              </p>
             </div>
-            <FileText size={80} className="absolute -bottom-6 -right-6 text-primary/5 group-hover:scale-110 transition-transform duration-700" />
+            <FileText
+              size={80}
+              className="absolute -bottom-6 -right-6 text-primary/5 group-hover:scale-110 transition-transform duration-700"
+            />
           </div>
         </div>
 

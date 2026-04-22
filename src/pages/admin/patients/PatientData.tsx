@@ -3,7 +3,6 @@ import { useParams, useNavigate, useOutletContext } from "react-router";
 import {
   ArrowLeft,
   Phone,
-  Play,
   Activity,
   Plus,
   Save,
@@ -31,7 +30,10 @@ import {
   TimelineHistory,
   type IHistoryItem,
 } from "../../../components/shared/history/TimelineHistory";
-import { mockStorage, type IMockAppointment } from "../../../services/mockStorage";
+import {
+  mockStorage,
+  type IMockAppointment,
+} from "../../../services/mockStorage";
 import { PATHS } from "../../../app/router/paths";
 
 export function PatientDataPage(): ReactNode {
@@ -46,7 +48,9 @@ export function PatientDataPage(): ReactNode {
   >("sessions");
   const [isAddingNote, setIsAddingNote] = useState(false);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
-  const [pendingAppointments, setPendingAppointments] = useState<IMockAppointment[]>([]);
+  const [pendingAppointments, setPendingAppointments] = useState<
+    IMockAppointment[]
+  >([]);
   const [newNote, setNewNote] = useState({
     type: "Nota de Evolución",
     notes: "",
@@ -57,27 +61,35 @@ export function PatientDataPage(): ReactNode {
   useEffect(() => {
     if (id) {
       const allAppointments = mockStorage.getAppointments();
-      const patientAppointments = allAppointments.filter(a => a.patientId === id);
-      
+      const patientAppointments = allAppointments.filter(
+        (a) => a.patientId === id,
+      );
+
       // Historial (completadas)
       const completed = patientAppointments
-        .filter(a => a.status === "completed")
-        .map(a => {
-          const doc = mockStorage.getDoctors().find(d => d.id === a.doctorId);
+        .filter((a) => a.status === "completed")
+        .map((a) => {
+          const doc = mockStorage.getDoctors().find((d) => d.id === a.doctorId);
           return {
             id: a.id,
-            date: new Date(a.date).toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }),
+            date: new Date(a.date).toLocaleDateString("es-ES", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            }),
             time: a.time,
             doctorName: doc?.name || "Especialista",
             type: a.type,
             notes: a.notes,
-            status: "completed" as const
+            status: "completed" as const,
           };
         });
       setHistory(completed);
 
       // Pendientes
-      const pending = patientAppointments.filter(a => a.status === "pending" || a.status === "confirmed");
+      const pending = patientAppointments.filter(
+        (a) => a.status === "pending" || a.status === "confirmed",
+      );
       setPendingAppointments(pending);
     }
   }, [id]);
@@ -293,43 +305,80 @@ export function PatientDataPage(): ReactNode {
                 <h3 className="text-base font-black text-foreground uppercase tracking-widest">
                   Citas Programadas
                 </h3>
-                <Button variant="outline" size="sm" className="rounded-sm font-bold" onClick={() => navigate(PATHS.ADMIN.CALENDAR)}>
-                    Agendar Nueva
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-sm font-bold"
+                  onClick={() => navigate(PATHS.ADMIN.CALENDAR)}
+                >
+                  Agendar Nueva
                 </Button>
               </div>
 
               {pendingAppointments.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {pendingAppointments.map(appt => {
-                        const doc = mockStorage.getDoctors().find(d => d.id === appt.doctorId);
-                        return (
-                            <div key={appt.id} className="bg-white p-5 rounded-md border border-border/40 shadow-sm flex items-center gap-5 group hover:border-primary/20 transition-all">
-                                <div className="w-14 h-14 rounded-sm bg-primary/5 flex flex-col items-center justify-center border border-primary/10 shrink-0">
-                                    <span className="text-[10px] font-black text-primary uppercase">{new Date(appt.date).toLocaleDateString("es-ES", { month: 'short' })}</span>
-                                    <span className="text-xl font-black text-primary leading-none">{new Date(appt.date).getDate()}</span>
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="px-2 py-0.5 bg-amber-50 text-amber-600 text-[8px] font-black uppercase rounded-sm border border-amber-100">Pendiente</span>
-                                        <span className="text-[10px] font-bold text-muted-foreground">{appt.time}</span>
-                                    </div>
-                                    <h4 className="text-sm font-black text-foreground truncate">{appt.type}</h4>
-                                    <p className="text-[10px] font-bold text-muted-foreground flex items-center gap-1.5 mt-1">
-                                        <Stethoscope size={12} className="text-primary/40" /> {doc?.name}
-                                    </p>
-                                </div>
-                                <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity rounded-sm">
-                                    <Edit size={14} />
-                                </Button>
-                            </div>
-                        )
-                    })}
+                  {pendingAppointments.map((appt) => {
+                    const doc = mockStorage
+                      .getDoctors()
+                      .find((d) => d.id === appt.doctorId);
+                    return (
+                      <div
+                        key={appt.id}
+                        className="bg-white p-5 rounded-md border border-border/40 shadow-sm flex items-center gap-5 group hover:border-primary/20 transition-all"
+                      >
+                        <div className="w-14 h-14 rounded-sm bg-primary/5 flex flex-col items-center justify-center border border-primary/10 shrink-0">
+                          <span className="text-[10px] font-black text-primary uppercase">
+                            {new Date(appt.date).toLocaleDateString("es-ES", {
+                              month: "short",
+                            })}
+                          </span>
+                          <span className="text-xl font-black text-primary leading-none">
+                            {new Date(appt.date).getDate()}
+                          </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="px-2 py-0.5 bg-amber-50 text-amber-600 text-[8px] font-black uppercase rounded-sm border border-amber-100">
+                              Pendiente
+                            </span>
+                            <span className="text-[10px] font-bold text-muted-foreground">
+                              {appt.time}
+                            </span>
+                          </div>
+                          <h4 className="text-sm font-black text-foreground truncate">
+                            {appt.type}
+                          </h4>
+                          <p className="text-[10px] font-bold text-muted-foreground flex items-center gap-1.5 mt-1">
+                            <Stethoscope
+                              size={12}
+                              className="text-primary/40"
+                            />{" "}
+                            {doc?.name}
+                          </p>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity rounded-sm"
+                        >
+                          <Edit size={14} />
+                        </Button>
+                      </div>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="bg-white p-12 rounded-md border border-dashed border-border/60 text-center">
-                   <CalendarDays size={40} className="mx-auto text-muted-foreground/20 mb-4" />
-                   <h4 className="text-sm font-black text-foreground uppercase">No hay citas pendientes</h4>
-                   <p className="text-xs font-bold text-muted-foreground mt-1">Este paciente no tiene citas programadas próximamente.</p>
+                  <CalendarDays
+                    size={40}
+                    className="mx-auto text-muted-foreground/20 mb-4"
+                  />
+                  <h4 className="text-sm font-black text-foreground uppercase">
+                    No hay citas pendientes
+                  </h4>
+                  <p className="text-xs font-bold text-muted-foreground mt-1">
+                    Este paciente no tiene citas programadas próximamente.
+                  </p>
                 </div>
               )}
             </div>

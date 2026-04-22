@@ -2,6 +2,8 @@ export const PATHS = {
   HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
+  
+  // PORTAL ADMINISTRATIVO
   ADMIN: {
     ROOT: "/admin",
     DASHBOARD: "/admin/dashboard",
@@ -12,6 +14,19 @@ export const PATHS = {
     APPOINTMENTS: "/admin/appointments",
     CALENDAR: "/admin/calendar",
   },
+
+  // PORTAL DOCTOR
+  DOCTOR: {
+    ROOT: "/doctor",
+    DASHBOARD: "/doctor/dashboard",
+    MY_CALENDAR: "/doctor/calendar",
+    MY_PATIENTS: "/doctor/patients",
+    PATIENT_DETAIL: "/doctor/patients/:id/data",
+    MY_PROFILE: "/doctor/profile/:id",
+    APPOINTMENTS: "/doctor/appointments",
+  },
+
+  // PORTAL PACIENTE
   PATIENT: {
     ROOT: "/patient",
     DASHBOARD: "/patient/dashboard",
@@ -19,7 +34,6 @@ export const PATHS = {
     TASKS: "/patient/tasks",
     APPOINTMENTS: "/patient/appointments",
   },
-  USER_PROFILE: "/profile",
 } as const;
 
 export type AppPaths = typeof PATHS;

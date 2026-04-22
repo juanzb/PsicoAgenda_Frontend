@@ -21,14 +21,14 @@ import {
   type ISessionData,
 } from "../../components/admin/sessions/ActiveSessionDrawer";
 
-// Mock de usuario actual (esto vendría de un AuthContext)
+// Mock de usuario actual (Simulando lo que vendría del Token)
 const MOCK_USER: IUser & { id: string; canViewAllCalendar?: boolean } = {
-  id: "DOC_1",
-  name: "Dr. Camilo Sánchez",
-  email: "contacto@psicoagenda.com",
-  role: "ADMIN", // Cambiar a 'DOCTOR' o 'PACIENTE' para probar
+  id: "USR_123",
+  name: "Usuario de Prueba",
+  email: "usuario@psicoagenda.com",
+  role: "ADMIN", // CAMBIA ESTO PARA PROBAR: "ADMIN", "DOCTOR", "PACIENTE"
   avatarUrl: "",
-  canViewAllCalendar: true, // Flag para doctores con permiso especial
+  canViewAllCalendar: true,
 };
 
 export function AdminLayout(): ReactNode {
@@ -81,7 +81,7 @@ export function AdminLayout(): ReactNode {
         name: "Dashboard",
         path: PATHS.ADMIN.DASHBOARD,
         icon: <LayoutDashboard size={16} />,
-        roles: ["ADMIN", "DOCTOR"],
+        roles: ["ADMIN"],
       },
       {
         name: "Gestión",

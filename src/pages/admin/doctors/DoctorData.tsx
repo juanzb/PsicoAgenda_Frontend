@@ -1,5 +1,5 @@
 import { type ReactNode, useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useOutletContext } from "react-router";
 import {
   ArrowLeft,
   Phone,
@@ -32,9 +32,12 @@ import {
 export function DoctorDataPage(): ReactNode {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { handleStartSession } = useOutletContext<{
+    handleStartSession: (id: string, name: string) => void;
+  }>();
   const [activeTab, setActiveTab] = useState<
     "appointments" | "pending" | "doctor-data" | "schedule"
-  >("appointments");
+  >("pending");
   const [doctor, setDoctor] = useState<IMockDoctor | undefined>(undefined);
   const [schedule, setSchedule] = useState<IDoctorSchedule[]>([]);
   const [pendingAppointments, setPendingAppointments] = useState<any[]>([]);

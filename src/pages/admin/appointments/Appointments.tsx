@@ -1,474 +1,172 @@
 import { useState, useMemo, type ReactNode } from "react";
-import {
-  Calendar,
-  Clock,
-  User,
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  ShieldCheck,
-  Search,
-  Info,
+import { useOutletContext } from "react-router";
+import { 
+  Search, 
+  Filter, 
+  Calendar as CalendarIcon, 
+  Clock, 
+  MoreVertical, 
+  Play, 
+  Plus,
+  Activity
 } from "lucide-react";
 import { Button } from "../../../components/ui/button/Button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "../../../components/ui/card/Card";
+import { Pagination } from "../../../components/ui/pagination/Pagination";
 
-// Tipos
-type TBookingStep = "specialist" | "schedule" | "summary" | "success";
-
-interface ISpecialist {
-  id: string;
-  name: string;
-  specialty: string;
-  avatarUrl: string;
-  description: string;
-  rating: number;
+interface ContextType {
+  handleStartSession: (id: string, name: string) => void;
 }
 
-// Mock de especialistas
-const specialists: ISpecialist[] = [
-  {
-    id: "1",
-    name: "Dra. Elena Martínez",
-    specialty: "Terapia Cognitivo-Conductual",
-    avatarUrl: "https://i.pravatar.cc/150?u=elena",
-    description:
-      "Especialista en ansiedad y depresión con más de 10 años de experiencia.",
-    rating: 4.9,
-  },
-  {
-    id: "2",
-    name: "Dr. Roberto Silva",
-    specialty: "Psicología Infantil y Adolescente",
-    avatarUrl: "https://i.pravatar.cc/150?u=roberto",
-    description:
-      "Enfoque lúdico para el desarrollo emocional en las etapas tempranas.",
-    rating: 4.8,
-  },
-  {
-    id: "3",
-    name: "Dra. Claudia Vargas",
-    specialty: "Terapia de Pareja y Familia",
-    avatarUrl: "https://i.pravatar.cc/150?u=claudia",
-    description: "Experta en resolución de conflictos y comunicación asertiva.",
-    rating: 5.0,
-  },
-];
+interface IAppointment {
+  id: string;
+  patientName: string;
+  patientId: string;
+  time: string;
+  date: string;
+  type: string;
+  status: "pending" | "confirmed" | "completed";
+  avatar: string;
+}
 
-// Horarios disponibles (Simulados)
-const timeSlots = [
-  "08:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
+const mockAppointments: IAppointment[] = [
+  { id: "1", patientName: "Carlos Rodríguez", patientId: "P-001", time: "09:00 AM", date: "22 Abr 2026", type: "Sesión Individual", status: "pending", avatar: "https://i.pravatar.cc/150?u=carlos" },
+  { id: "2", patientName: "Ana María Silva", patientId: "P-002", time: "10:30 AM", date: "22 Abr 2026", type: "Terapia de Pareja", status: "confirmed", avatar: "https://i.pravatar.cc/150?u=ana" },
+  { id: "3", patientName: "Juan Pablo Duarte", patientId: "P-003", time: "02:00 PM", date: "22 Abr 2026", type: "Evaluación Inicial", status: "pending", avatar: "https://i.pravatar.cc/150?u=juan" },
+  { id: "4", patientName: "Lucía Méndez", patientId: "P-004", time: "04:30 PM", date: "22 Abr 2026", type: "Seguimiento", status: "completed", avatar: "https://i.pravatar.cc/150?u=lucia" },
+  { id: "5", patientName: "Roberto Gómez", patientId: "P-005", time: "08:00 AM", date: "23 Abr 2026", type: "Sesión Individual", status: "confirmed", avatar: "https://i.pravatar.cc/150?u=roberto" },
 ];
 
 export function AppointmentsPage(): ReactNode {
-  const [step, setStep] = useState<TBookingStep>("specialist");
-  const [selectedSpecialist, setSelectedSpecialist] =
-    useState<ISpecialist | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedTime, setSelectedTime] = useState<string>("");
-  const [isBooking, setIsBooking] = useState(false);
+  const { handleStartSession } = useOutletContext<ContextType>();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  // Lógica para fechas (Máximo 30 días, no pasado)
-  const availableDates = useMemo(() => {
-    const dates = [];
-    const today = new Date();
-    for (let i = 0; i <= 30; i++) {
-      const date = new Date();
-      date.setDate(today.getDate() + i);
-      // Ignorar domingos
-      if (date.getDay() !== 0) {
-        dates.push({
-          full: date.toISOString().split("T")[0],
-          day: date.toLocaleDateString("es-ES", { weekday: "short" }),
-          num: date.getDate(),
-          month: date.toLocaleDateString("es-ES", { month: "short" }),
-        });
-      }
-    }
-    return dates;
-  }, []);
+  const filteredAppointments = useMemo(() => {
+    return mockAppointments.filter(app => 
+      app.patientName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm]);
 
-  const handleConfirm = () => {
-    setIsBooking(true);
-    setTimeout(() => {
-      setIsBooking(false);
-      setStep("success");
-    }, 1500);
-  };
-
-  const handleReset = () => {
-    setStep("specialist");
-    setSelectedSpecialist(null);
-    setSelectedDate("");
-    setSelectedTime("");
-  };
+  const paginatedAppointments = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredAppointments.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredAppointments, currentPage, itemsPerPage]);
 
   return (
-    <div className="max-w-4xl mx-auto pb-12">
-      {/* Stepper Visual */}
-      {step !== "success" && (
-        <div className="flex items-center justify-between mb-8 px-4">
-          {[
-            { id: "specialist", label: "Especialista", icon: User },
-            { id: "schedule", label: "Horario", icon: Calendar },
-            { id: "summary", label: "Confirmación", icon: ShieldCheck },
-          ].map((s, i) => {
-            const Icon = s.icon;
-            const isActive = step === s.id;
-            const isDone =
-              (i === 0 && (step === "schedule" || step === "summary")) ||
-              (i === 1 && step === "summary");
+    <div className="h-full w-full max-w-400 mx-auto grid grid-rows-[auto_1fr_auto] overflow-hidden relative p-1 animate-in fade-in duration-500">
+      
+      {/* 1. SECCIÓN SUPERIOR: FILTROS (COHERENTE CON DOCTORS/PATIENTS) */}
+      <div className="pb-3 shrink-0">
+        <div className="flex flex-col md:flex-row gap-2 items-stretch md:items-center bg-white p-2 rounded-md border border-border/40 shadow-sm">
+          <div className="flex gap-2 flex-1">
+            <Button
+              size="sm"
+              className="rounded-md px-3 font-black text-[10px] uppercase gradient-primary h-9 whitespace-nowrap"
+            >
+              <Plus size={14} className="mr-1.5" /> Nueva Cita
+            </Button>
 
-            return (
-              <div
-                key={s.id}
-                className="flex items-center flex-1 last:flex-none"
-              >
-                <div className="flex flex-col items-center gap-2">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                      isActive
-                        ? "bg-primary text-white scale-110 shadow-lg shadow-primary/20"
-                        : isDone
-                          ? "bg-primary/20 text-primary"
-                          : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {isDone ? <CheckCircle2 size={20} /> : <Icon size={20} />}
-                  </div>
-                  <span
-                    className={`text-[10px] font-bold uppercase tracking-widest ${isActive ? "text-primary" : "text-muted-foreground"}`}
-                  >
-                    {s.label}
-                  </span>
-                </div>
-                {i < 2 && (
-                  <div
-                    className={`flex-1 h-0.5 mx-4 ${isDone ? "bg-primary/30" : "bg-muted"}`}
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* PASO 1: SELECCIÓN DE ESPECIALISTA */}
-      {step === "specialist" && (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 px-1">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">
-                Elige a tu especialista
-              </h1>
-              <p className="text-muted-foreground">
-                Selecciona el profesional que mejor se adapte a tus necesidades
-              </p>
-            </div>
-            <div className="relative w-full md:w-64">
-              <Search
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                size={18}
-              />
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/50" size={14} />
               <input
-                placeholder="Buscar por nombre..."
-                className="w-full pl-10 pr-4 py-2 bg-white border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                type="text"
+                placeholder="Buscar por paciente..."
+                value={searchTerm}
+                onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                className="w-full pl-9 pr-4 py-1.5 bg-muted/20 border-none rounded-md focus:outline-none focus:ring-1 focus:ring-primary/20 focus:bg-white transition-all font-bold text-xs h-9"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {specialists.map((doc) => (
-              <Card
-                key={doc.id}
-                className={`cursor-pointer group transition-all duration-300 border-2 hover:shadow-xl ${
-                  selectedSpecialist?.id === doc.id
-                    ? "border-primary bg-primary/5 shadow-lg"
-                    : "border-transparent"
-                }`}
-                // onClick={() => setSelectedSpecialist(doc)}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-md px-3 font-black text-[10px] uppercase h-9 border border-border/40 text-muted-foreground hover:bg-muted"
+          >
+            <Filter className="w-3.5 h-3.5 mr-1.5" /> Filtros
+          </Button>
+        </div>
+      </div>
+
+      {/* 2. SECCIÓN CENTRAL: LISTADO DE TARJETAS */}
+      <div className="overflow-y-auto custom-scrollbar pr-1 min-h-0">
+        {paginatedAppointments.length > 0 ? (
+          <div className="flex flex-col gap-1.5 pb-2">
+            {paginatedAppointments.map((app) => (
+              <div 
+                key={app.id} 
+                className="bg-white border border-border/40 p-3 rounded-md hover:border-primary/20 hover:shadow-md transition-all group flex items-center justify-between"
               >
-                <CardContent className="p-6">
-                  <div className="flex gap-4">
-                    <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border-2 border-white shadow-sm">
-                      <img
-                        src={doc.avatarUrl}
-                        alt={doc.name}
-                        className="w-full h-full object-cover"
-                      />
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-md overflow-hidden border border-border/40 shadow-sm shrink-0">
+                    <img src={app.avatar} alt={app.patientName} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <h4 className="text-sm font-black text-foreground truncate group-hover:text-primary transition-colors">
+                        {app.patientName}
+                      </h4>
+                      <span className={`px-2 py-0.5 rounded-sm text-[8px] font-black uppercase border ${
+                        app.status === 'completed' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 
+                        app.status === 'confirmed' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-amber-50 text-amber-600 border-amber-100'
+                      }`}>
+                        {app.status === 'completed' ? 'Atendida' : app.status === 'confirmed' ? 'Confirmada' : 'Pendiente'}
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
-                          {doc.name}
-                        </h3>
-                        <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-100">
-                          <span className="text-xs font-bold text-amber-700">
-                            {doc.rating}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-sm font-semibold text-primary/80 mb-2">
-                        {doc.specialty}
-                      </p>
-                      <p className="text-xs text-muted-foreground line-clamp-2">
-                        {doc.description}
-                      </p>
+                    <div className="flex items-center gap-3 text-[9px] font-bold text-muted-foreground uppercase tracking-widest">
+                      <span className="flex items-center gap-1"><CalendarIcon size={10} className="text-primary" /> {app.date}</span>
+                      <span className="flex items-center gap-1"><Clock size={10} className="text-primary" /> {app.time}</span>
+                      <span className="opacity-40">|</span>
+                      <span>{app.type}</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Button 
+                    size="sm" 
+                    className={`h-8 rounded-sm text-[9px] font-black uppercase tracking-widest px-4 transition-all duration-300 ${
+                      app.status === 'completed' 
+                        ? "bg-muted text-muted-foreground border-border/40 cursor-not-allowed opacity-60" 
+                        : "gradient-primary shadow-md shadow-primary/10"
+                    }`}
+                    onClick={() => app.status !== 'completed' && handleStartSession(app.patientId, app.patientName)}
+                    disabled={app.status === 'completed'}
+                    icon={<Play size={10} className={app.status === 'completed' ? "text-muted-foreground" : "fill-white"} />}
+                  >
+                    {app.status === 'completed' ? "Atendida" : "Atender"}
+                  </Button>
+                  <button className="p-2 text-muted-foreground hover:bg-muted rounded-md transition-all">
+                    <MoreVertical size={16} />
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
-
-          <div className="flex justify-end pt-4">
-            <Button
-              size="lg"
-              className="rounded-lg px-10 gradient-primary"
-              disabled={!selectedSpecialist}
-              onClick={() => setStep("schedule")}
-              icon={<ArrowRight size={20} />}
-              iconPosition="right"
-            >
-              Continuar
-            </Button>
+        ) : (
+          <div className="h-full flex flex-col items-center justify-center bg-white rounded-lg border border-dashed border-border/60">
+            <Activity size={24} className="text-muted-foreground/20 mb-3" />
+            <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
+              Sin citas programadas
+            </h3>
           </div>
+        )}
+      </div>
+
+      {/* 3. SECCIÓN INFERIOR: PAGINACIÓN */}
+      <div className="pt-3 shrink-0">
+        <div className="bg-white p-1 rounded-md border border-border/40 shadow-sm">
+          <Pagination
+            currentPage={currentPage}
+            totalItems={filteredAppointments.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={(items) => { setItemsPerPage(items); setCurrentPage(1); }}
+            itemsPerPageOptions={[10, 20, 50]}
+          />
         </div>
-      )}
-
-      {/* PASO 2: SELECCIÓN DE HORARIO */}
-      {step === "schedule" && (
-        <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-          <div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setStep("specialist")}
-              className="mb-4"
-            >
-              <ArrowLeft size={16} className="mr-2" /> Volver a especialistas
-            </Button>
-            <h1 className="text-2xl font-bold text-foreground">
-              Elige fecha y hora
-            </h1>
-            <p className="text-muted-foreground text-sm">
-              Próximos 30 días disponibles con {selectedSpecialist?.name}
-            </p>
-          </div>
-
-          <Card className="border-none shadow-elevated rounded-lg">
-            <CardContent className="p-8 space-y-8">
-              {/* Selector de Fecha */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                  <Calendar size={16} /> Selecciona el día
-                </h3>
-                <div className="flex gap-3 overflow-x-auto pb-4 custom-scrollbar no-scrollbar-x">
-                  {availableDates.map((d) => (
-                    <button
-                      key={d.full}
-                      onClick={() => setSelectedDate(d.full)}
-                      className={`flex flex-col items-center min-w-16 p-3 rounded-lg border-2 transition-all cursor-pointer ${
-                        selectedDate === d.full
-                          ? "bg-primary border-primary text-white shadow-lg shadow-primary/20"
-                          : "border-border hover:border-primary/40 bg-muted/30"
-                      }`}
-                    >
-                      <span className="text-[10px] font-bold uppercase opacity-60 mb-1">
-                        {d.day}
-                      </span>
-                      <span className="text-xl font-bold leading-none">
-                        {d.num}
-                      </span>
-                      <span className="text-[10px] font-bold mt-1">
-                        {d.month}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Selector de Hora */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                  <Clock size={16} /> Horas disponibles
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {timeSlots.map((time) => (
-                    <button
-                      key={time}
-                      onClick={() => setSelectedTime(time)}
-                      className={`py-3 px-4 rounded-md border-2 font-bold text-sm transition-all cursor-pointer ${
-                        selectedTime === time
-                          ? "bg-primary border-primary text-white"
-                          : "border-border hover:border-primary/40"
-                      }`}
-                    >
-                      {time}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="flex justify-end pt-4">
-            <Button
-              size="lg"
-              className="rounded-lg px-10 gradient-primary"
-              disabled={!selectedDate || !selectedTime}
-              onClick={() => setStep("summary")}
-              icon={<ArrowRight size={20} />}
-              iconPosition="right"
-            >
-              Revisar cita
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* PASO 3: RESUMEN Y CONFIRMACIÓN */}
-      {step === "summary" && (
-        <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500">
-          <div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setStep("schedule")}
-              className="mb-4"
-            >
-              <ArrowLeft size={16} className="mr-2" /> Corregir horario
-            </Button>
-            <h1 className="text-2xl font-bold text-foreground">
-              Confirma tu reserva
-            </h1>
-            <p className="text-muted-foreground text-sm">
-              Revisa los detalles antes de agendar
-            </p>
-          </div>
-
-          <Card className="border-none shadow-elevated rounded-lg overflow-hidden">
-            <div className="gradient-primary p-6 text-white flex items-center gap-4">
-              <div className="w-16 h-16 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center">
-                <ShieldCheck size={32} />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">Resumen de Consulta</h3>
-                <p className="text-white/80 text-sm">Todo está casi listo</p>
-              </div>
-            </div>
-
-            <CardContent className="p-8 space-y-6">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div className="flex gap-4 items-center">
-                    <div className="w-12 h-12 rounded-md bg-muted flex items-center justify-center shrink-0">
-                      <User className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                        Especialista
-                      </p>
-                      <p className="font-bold text-foreground">
-                        {selectedSpecialist?.name}
-                      </p>
-                      <p className="text-xs text-primary font-medium">
-                        {selectedSpecialist?.specialty}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4 items-center">
-                    <div className="w-12 h-12 rounded-md bg-muted flex items-center justify-center shrink-0">
-                      <Calendar className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                        Fecha y Hora
-                      </p>
-                      <p className="font-bold text-foreground">
-                        {selectedDate}
-                      </p>
-                      <p className="text-sm font-medium text-foreground/80">
-                        {selectedTime} Horas
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-muted/30 rounded-lg p-6 border border-dashed border-border flex flex-col justify-center gap-3">
-                  <div className="flex items-center gap-2 text-primary">
-                    <Info size={18} />
-                    <span className="text-sm font-bold">
-                      Información Importante
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Recuerda llegar 5 minutos antes. Puedes cancelar o
-                    reprogramar hasta 24 horas antes sin costo adicional.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-
-            <CardFooter className="p-8 pt-0">
-              <Button
-                size="lg"
-                className="w-full rounded-lg h-14 text-lg font-bold gradient-primary shadow-xl shadow-primary/20"
-                onClick={handleConfirm}
-                isLoading={isBooking}
-              >
-                Confirmar y Agendar Cita
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      )}
-
-      {/* PASO FINAL: ÉXITO */}
-      {step === "success" && (
-        <div className="text-center py-12 animate-in fade-in zoom-in-95 duration-700">
-          <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-8 border-4 border-primary/20 shadow-lg animate-bounce">
-            <CheckCircle2 size={48} className="text-primary" />
-          </div>
-
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-            ¡Cita Agendada con Éxito!
-          </h1>
-          <p className="text-muted-foreground text-lg mb-10 max-w-md mx-auto">
-            Hemos enviado un comprobante y los detalles de tu cita con la
-            <span className="text-primary font-bold">
-              {" "}
-              {selectedSpecialist?.name}
-            </span>{" "}
-            a tu correo y WhatsApp.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="rounded-lg px-10"
-              onClick={handleReset}
-            >
-              Agendar otra cita
-            </Button>
-            <Button variant="outline" size="lg" className="rounded-lg px-10">
-              Ir a mis citas
-            </Button>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

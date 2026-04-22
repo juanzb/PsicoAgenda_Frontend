@@ -1,9 +1,70 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router";
 import { Button } from "../ui/button/Button";
-import { CalendarPlus, Shield, Star, CheckCircle2 } from "lucide-react";
+import {
+  CalendarPlus,
+  Shield,
+  Star,
+  CheckCircle2,
+  Brain,
+  Users,
+  Video,
+  Sparkles,
+} from "lucide-react";
 import heroImage from "../../assets/hero-therapy.jpg";
 
+const slides = [
+  {
+    id: 1,
+    image: heroImage,
+    icon: <Brain className="w-5 h-5 text-white" />,
+    title: "Dra. Elena Martínez",
+    subtitle: "Especialista Senior",
+    description:
+      "\"Tu bienestar es mi prioridad. Juntos encontraremos las herramientas para tu crecimiento personal.\"",
+  },
+  {
+    id: 2,
+    image:
+      "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1000&auto=format&fit=crop",
+    icon: <Users className="w-5 h-5 text-white" />,
+    title: "Terapia de Pareja",
+    subtitle: "Fortalece vínculos",
+    description:
+      "Sesiones especializadas para mejorar la comunicación y resolver conflictos en la relación.",
+  },
+  {
+    id: 3,
+    image:
+      "https://images.unsplash.com/photo-1516302752625-fbb3c5eca1d4?q=80&w=1000&auto=format&fit=crop",
+    icon: <Video className="w-5 h-5 text-white" />,
+    title: "Consulta Online",
+    subtitle: "Donde estés",
+    description:
+      "Atención profesional desde la comodidad de tu hogar, con la misma calidez y privacidad.",
+  },
+  {
+    id: 4,
+    image:
+      "https://images.unsplash.com/photo-1527137342181-19aab11a8ee8?q=80&w=1000&auto=format&fit=crop",
+    icon: <Sparkles className="w-5 h-5 text-white" />,
+    title: "Terapia Infantil",
+    subtitle: "Cuidado especializado",
+    description:
+      "Acompañamos el desarrollo emocional de los más pequeños en un ambiente seguro y lúdico.",
+  },
+];
+
 const HeroSection = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative pt-24 pb-12 overflow-hidden bg-background">
       {/* Decorative background elements */}
@@ -95,55 +156,75 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="relative hidden lg:block animate-in fade-in slide-in-from-right-6 duration-700 delay-200">
-          <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(13,138,188,0.3)] border-8 border-white">
-            <img
-              src={heroImage}
-              alt="Psicóloga profesional"
-              className="w-full h-137.5 object-cover"
-            />
-            {/* Floating glass card */}
-            <div className="absolute bottom-6 left-6 right-6 bg-white/80 backdrop-blur-xl p-5 rounded-lg shadow-xl border border-white/40">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
-                  <Brain className="w-5 h-5 text-white" />
+        <div className="relative hidden lg:block">
+          <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(13,138,188,0.3)] border-8 border-white group">
+            {/* Main Image Slider */}
+            <div className="relative h-137.5 w-full overflow-hidden bg-muted">
+              {slides.map((slide, index) => (
+                <div
+                  key={slide.id}
+                  className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                    index === currentSlide
+                      ? "opacity-100 scale-100 translate-x-0"
+                      : "opacity-0 scale-110 translate-x-full"
+                  }`}
+                >
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-full object-cover"
+                  />
+                  
+                  {/* Floating glass card - dynamic content */}
+                  <div 
+                    className={`absolute bottom-6 left-6 right-6 bg-white/80 backdrop-blur-xl p-5 rounded-lg shadow-xl border border-white/40 transition-all duration-700 delay-300 ${
+                      index === currentSlide ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
+                        {slide.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-black text-foreground text-sm">
+                          {slide.title}
+                        </h4>
+                        <p className="text-[10px] text-primary font-bold uppercase tracking-widest">
+                          {slide.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-foreground/80 leading-relaxed italic font-medium">
+                      {slide.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-black text-foreground text-sm">
-                    Dra. Elena Martínez
-                  </h4>
-                  <p className="text-[10px] text-primary font-bold uppercase tracking-widest">
-                    Especialista Senior
-                  </p>
-                </div>
-              </div>
-              <p className="text-xs text-foreground/80 leading-relaxed italic font-medium">
-                "Tu bienestar es mi prioridad. Juntos encontraremos las
-                herramientas para tu crecimiento personal."
-              </p>
+              ))}
+            </div>
+
+            {/* Pagination Dots */}
+            <div className="absolute top-6 right-6 z-20 flex gap-2">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    index === currentSlide 
+                      ? "w-8 bg-primary" 
+                      : "w-2 bg-white/50 hover:bg-white"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
+          
+          {/* Decorative element behind slider */}
+          <div className="absolute -bottom-6 -right-6 w-full h-full border-2 border-primary/20 rounded-[2.5rem] -z-10" />
         </div>
       </div>
     </section>
   );
 };
-
-// Internal icon import for consistency
-const Brain = ({ className }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04Z" />
-    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04Z" />
-  </svg>
-);
 
 export default HeroSection;

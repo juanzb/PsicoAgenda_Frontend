@@ -1,8 +1,6 @@
 import {
   X,
   Clock,
-  MessageSquare,
-  Edit,
   ArrowRight,
   Search,
   History,
