@@ -180,7 +180,7 @@ export function CustomCalendar({
         style={{ height: "100%", flex: 1 }}
         messages={messages}
         culture="es-ES"
-        selectable
+        selectable={!!onSelectSlot}
         onSelectSlot={onSelectSlot}
         onSelectEvent={(e: object) => onSelectEvent?.(e as ICalendarEvent)}
         eventPropGetter={eventStyleGetter}

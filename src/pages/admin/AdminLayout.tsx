@@ -100,7 +100,7 @@ export function AdminLayout(): ReactNode {
             icon: <Stethoscope size={16} />,
           },
           {
-            name: "Calendario General",
+            name: "Agenda",
             path: PATHS.ADMIN.CALENDAR,
             icon: <Calendar size={16} />,
           },

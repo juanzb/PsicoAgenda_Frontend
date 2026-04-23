@@ -1,13 +1,14 @@
 import { useState, useMemo, type ReactNode } from "react";
-import { UserPlus, Search, Filter } from "lucide-react";
-import { Button } from "../../../components/ui/button/Button";
+import { UserPlus, Search } from "lucide-react";
 import { Pagination } from "../../../components/ui/pagination/Pagination";
 import {
   CardPatients,
 } from "../../../components/admin/patients/CardPatients";
 import { PatientDetail } from "../../../components/admin/patients/PatientDetail";
 import { PatientModal } from "../../../components/admin/patients/PatientModal";
-import { mockStorage, type IMockPatient } from "../../../services/mockStorage";
+import { mockStorage } from "../../../services/mockStorage";
+
+import { ViewHeader } from "../../../components/ui/view-header/ViewHeader";
 
 export function PatientsPage(): ReactNode {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,11 +31,6 @@ export function PatientsPage(): ReactNode {
     return filteredPatients.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredPatients, currentPage, itemsPerPage]);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    setCurrentPage(1);
-  };
-
   const handleSavePatient = (data: any) => {
     mockStorage.addPatient(data);
     setIsModalOpen(false);
@@ -42,42 +38,17 @@ export function PatientsPage(): ReactNode {
 
   return (
     <div className="h-full w-full max-w-400 mx-auto grid grid-rows-[auto_1fr_auto] overflow-hidden relative p-1">
-      {/* 1. SECCIÓN SUPERIOR: FILTROS */}
-      <div className="pb-3 shrink-0">
-        <div className="flex flex-col md:flex-row gap-2 items-stretch md:items-center bg-white p-2 rounded-md border border-border/40 shadow-sm">
-          <div className="flex gap-2 flex-1">
-            <Button
-              size="sm"
-              onClick={() => setIsModalOpen(true)}
-              className="rounded-md px-3 font-black text-[10px] uppercase gradient-primary h-9 whitespace-nowrap"
-            >
-              <UserPlus size={14} className="mr-1.5" /> Nuevo Paciente
-            </Button>
-
-            <div className="relative flex-1">
-              <Search
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/50"
-                size={14}
-              />
-              <input
-                type="text"
-                placeholder="Buscar por nombre..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="w-full pl-9 pr-4 py-1.5 bg-muted/20 border-none rounded-md focus:outline-none focus:ring-1 focus:ring-primary/20 focus:bg-white transition-all font-bold text-xs h-9"
-              />
-            </div>
-          </div>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            className="rounded-md px-3 font-black text-[10px] uppercase h-9 border border-border/40 text-muted-foreground hover:bg-muted"
-          >
-            <Filter className="w-3.5 h-3.5 mr-1.5" /> Filtros
-          </Button>
-        </div>
-      </div>
+      <ViewHeader
+        actionLabel="Nuevo Paciente"
+        actionIcon={UserPlus}
+        onActionClick={() => setIsModalOpen(true)}
+        searchTerm={searchTerm}
+        onSearch={(val) => {
+          setSearchTerm(val);
+          setCurrentPage(1);
+        }}
+        searchPlaceholder="Buscar por nombre..."
+      />
 
       {/* 2. SECCIÓN CENTRAL: LISTADO */}
       <div className="overflow-y-auto custom-scrollbar pr-1 min-h-0">
